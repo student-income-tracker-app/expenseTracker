@@ -1,0 +1,2 @@
+C:/Users/alsha/StudioProjects/course_project_group16/android/app/.cxx/Debug/1pg704e4/x86/CMakeFiles/edit_cache.dir
+C:/Users/alsha/StudioProjects/course_project_group16/android/app/.cxx/Debug/1pg704e4/x86/CMakeFiles/rebuild_cache.dir
