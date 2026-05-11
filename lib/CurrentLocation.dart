@@ -7,6 +7,7 @@ import 'package:latlong2/latlong.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import 'app_palette.dart';
+import 'app_palette.dart';
 
 class CurrentLocationPage extends StatefulWidget {
   const CurrentLocationPage({super.key});
