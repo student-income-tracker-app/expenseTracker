@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'app_palette.dart';
 import 'DetailedStatement.dart';
-import 'DetailedStatement.dart';
+
 
 class ReportPage extends StatelessWidget {
   const ReportPage({super.key});
