@@ -5,6 +5,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'app_palette.dart';
+import 'app_palette.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
