@@ -19,6 +19,7 @@ class _AIChatbotPageState extends State<AIChatbotPage> {
     }
   }
 
+  
   @override
   Widget build(BuildContext context) {
     final palette = AppPalette.of(context);
