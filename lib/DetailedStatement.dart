@@ -7,7 +7,7 @@ import 'app_palette.dart';
 
 class DetailedStatementPage extends StatefulWidget {
   const DetailedStatementPage({super.key});
-
+  
   @override
   State<DetailedStatementPage> createState() => _DetailedStatementPageState();
 }
