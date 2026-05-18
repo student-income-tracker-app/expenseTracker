@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'Home.dart';
+import 'NavBar.dart';
 import 'forgotPassword.dart';
 import 'user_register.dart';
 
@@ -12,6 +13,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMixin {
+  final _formKey = GlobalKey<FormState>();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
@@ -71,20 +73,7 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
     final emailRaw = emailController.text.trim();
     final passRaw = passwordController.text;
 
-    // Local validation
-    final emailErr = emailValidator(emailRaw);
-    if (emailErr != null) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(emailErr), backgroundColor: Colors.red),
-      );
-      return;
-    }
-
-    final passErr = passwordValidator(passRaw);
-    if (passErr != null) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(passErr), backgroundColor: Colors.red),
-      );
+    if (!(_formKey.currentState?.validate() ?? false)) {
       return;
     }
 
@@ -109,7 +98,7 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
 
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (_) => const HomePage()),
+        MaterialPageRoute(builder: (_) => const NavBarPage()),
       );
     } on FirebaseAuthException catch (e) {
       final msg = _friendlyLoginError(e);
@@ -221,50 +210,61 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
                           ),
                         ],
                       ),
-                      child: Column(
-                        children: [
-                          // Email
-                          TextFormField(
-                            controller: emailController,
-                            keyboardType: TextInputType.emailAddress,
-                            decoration: InputDecoration(
-                              hintText: "Email Address",
-                              prefixIcon: Icon(Icons.email, color: accentBlue),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(15),
-                                borderSide: BorderSide.none,
-                              ),
-                              filled: true,
-                              fillColor: backgroundLight,
-                              contentPadding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
-                            ),
-                          ),
-                          const SizedBox(height: 15),
-
-                          // Password
-                          TextFormField(
-                            controller: passwordController,
-                            obscureText: _obscurePassword,
-                            decoration: InputDecoration(
-                              hintText: "Password",
-                              prefixIcon: Icon(Icons.lock, color: accentBlue),
-                              suffixIcon: IconButton(
-                                icon: Icon(
-                                  _obscurePassword ? Icons.visibility_off : Icons.visibility,
-                                  color: accentBlue,
+                      child: Form(
+                        key: _formKey,
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        child: Column(
+                          children: [
+                            // Email
+                            TextFormField(
+                              controller: emailController,
+                              keyboardType: TextInputType.emailAddress,
+                              inputFormatters: [
+                                FilteringTextInputFormatter.deny(RegExp(r'\s')),
+                              ],
+                              validator: emailValidator,
+                              decoration: InputDecoration(
+                                hintText: "Email Address",
+                                prefixIcon: Icon(Icons.email, color: accentBlue),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(15),
+                                  borderSide: BorderSide.none,
                                 ),
-                                onPressed: () => setState(() => _obscurePassword = !_obscurePassword),
+                                filled: true,
+                                fillColor: backgroundLight,
+                                contentPadding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
                               ),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(15),
-                                borderSide: BorderSide.none,
-                              ),
-                              filled: true,
-                              fillColor: backgroundLight,
-                              contentPadding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
                             ),
-                          ),
-                          const SizedBox(height: 10),
+                            const SizedBox(height: 15),
+
+                            // Password
+                            TextFormField(
+                              controller: passwordController,
+                              obscureText: _obscurePassword,
+                              inputFormatters: [
+                                FilteringTextInputFormatter.deny(RegExp(r'\s')),
+                              ],
+                              validator: passwordValidator,
+                              decoration: InputDecoration(
+                                hintText: "Password",
+                                prefixIcon: Icon(Icons.lock, color: accentBlue),
+                                suffixIcon: IconButton(
+                                  icon: Icon(
+                                    _obscurePassword ? Icons.visibility_off : Icons.visibility,
+                                    color: accentBlue,
+                                  ),
+                                  onPressed: () => setState(() => _obscurePassword = !_obscurePassword),
+                                ),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(15),
+                                  borderSide: BorderSide.none,
+                                ),
+                                filled: true,
+                                fillColor: backgroundLight,
+                                contentPadding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+                              ),
+                            ),
+                            const SizedBox(height: 10),
 
                           // Forgot Password
                           Align(
@@ -316,18 +316,19 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
                                 child: _isLoading
                                     ? const CircularProgressIndicator(color: Colors.white)
                                     : const Text(
-                                  "Login",
-                                  style: TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white,
-                                  ),
-                                ),
+                                        "Login",
+                                        style: TextStyle(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white,
+                                        ),
+                                      ),
                               ),
                             ),
                           ),
                         ],
                       ),
+                    ),
                     ),
 
                     const SizedBox(height: 20),

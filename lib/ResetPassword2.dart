@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class ResetPasswordPage extends StatefulWidget {
@@ -9,13 +10,70 @@ class ResetPasswordPage extends StatefulWidget {
 }
 
 class _ResetPasswordPageState extends State<ResetPasswordPage> {
+  final _formKey = GlobalKey<FormState>();
   final _currentPasswordController = TextEditingController();
   final _newPasswordController = TextEditingController();
   final _confirmNewPasswordController = TextEditingController();
 
   bool _isLoading = false;
 
+  String? _passwordStrengthError(String value) {
+    if (value.length < 8) {
+      return 'Password must be at least 8 characters.';
+    }
+    if (!RegExp(r'[A-Z]').hasMatch(value)) {
+      return 'Password must include an uppercase letter.';
+    }
+    if (!RegExp(r'[a-z]').hasMatch(value)) {
+      return 'Password must include a lowercase letter.';
+    }
+    if (!RegExp(r'[0-9]').hasMatch(value)) {
+      return 'Password must include a number.';
+    }
+    if (!RegExp(r"[!@#\$%\^&\*\(\)_\+\-=\[\]\{\};:',.<>\/\?\\|`~]").hasMatch(value)) {
+      return 'Password must include a special character.';
+    }
+    return null;
+  }
+
   Future<void> _resetPassword() async {
+    if (!(_formKey.currentState?.validate() ?? false)) {
+      return;
+    }
+    final currentPassword = _currentPasswordController.text;
+    final newPassword = _newPasswordController.text;
+    final confirmPassword = _confirmNewPasswordController.text;
+
+    if (currentPassword.trim().isEmpty ||
+        newPassword.trim().isEmpty ||
+        confirmPassword.trim().isEmpty) {
+      _showMessageDialog(
+        title: 'Error',
+        message: 'Please fill in all password fields.',
+        isError: true,
+      );
+      return;
+    }
+
+    final strengthError = _passwordStrengthError(newPassword);
+    if (strengthError != null) {
+      _showMessageDialog(
+        title: 'Error',
+        message: strengthError,
+        isError: true,
+      );
+      return;
+    }
+
+    if (currentPassword == newPassword) {
+      _showMessageDialog(
+        title: 'Error',
+        message: 'New password must be different from current password.',
+        isError: true,
+      );
+      return;
+    }
+
     if (_newPasswordController.text != _confirmNewPasswordController.text) {
       _showMessageDialog(
         title: 'Error',
@@ -127,9 +185,12 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
       body: Padding(
         padding: const EdgeInsets.all(20),
         child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
+          child: Form(
+            key: _formKey,
+            autovalidateMode: AutovalidateMode.onUserInteraction,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
               const SizedBox(height: 40),
               const Text(
                 "Change your password",
@@ -142,6 +203,8 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                 controller: _currentPasswordController,
                 label: "Current Password",
                 obscureText: true,
+                validator: (v) =>
+                    (v == null || v.trim().isEmpty) ? 'Please enter your current password.' : null,
               ),
               const SizedBox(height: 15),
 
@@ -150,6 +213,11 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                 controller: _newPasswordController,
                 label: "New Password",
                 obscureText: true,
+                validator: (v) {
+                  final value = v?.trim() ?? '';
+                  if (value.isEmpty) return 'Please enter a new password.';
+                  return _passwordStrengthError(value);
+                },
               ),
               const SizedBox(height: 15),
 
@@ -158,6 +226,14 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                 controller: _confirmNewPasswordController,
                 label: "Confirm New Password",
                 obscureText: true,
+                validator: (v) {
+                  final value = v?.trim() ?? '';
+                  if (value.isEmpty) return 'Please confirm the new password.';
+                  if (value != _newPasswordController.text) {
+                    return 'Passwords do not match.';
+                  }
+                  return null;
+                },
               ),
               const SizedBox(height: 30),
 
@@ -184,7 +260,8 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                   ),
                 ),
               ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
@@ -196,10 +273,15 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
     required TextEditingController controller,
     required String label,
     required bool obscureText,
+    String? Function(String?)? validator,
   }) {
-    return TextField(
+    return TextFormField(
       controller: controller,
       obscureText: obscureText,
+      inputFormatters: [
+        FilteringTextInputFormatter.deny(RegExp(r'\s')),
+      ],
+      validator: validator,
       decoration: InputDecoration(
         labelText: label,
         labelStyle: const TextStyle(color: Color(0xFF3A4A91)), // Consistent with the app color

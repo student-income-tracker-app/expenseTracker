@@ -1,8 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter_firebase_app_2/Login.dart';
-import 'package:crypt/crypt.dart';  // Import the crypt package for hashing
+import 'package:crypt/crypt.dart'; // Import the crypt package for hashing
 
 class UserRegister extends StatefulWidget {
   const UserRegister({super.key});
@@ -11,7 +12,8 @@ class UserRegister extends StatefulWidget {
   _UserRegisterState createState() => _UserRegisterState();
 }
 
-class _UserRegisterState extends State<UserRegister> with SingleTickerProviderStateMixin {
+class _UserRegisterState extends State<UserRegister>
+    with SingleTickerProviderStateMixin {
   final _formKey = GlobalKey<FormState>();
 
   final TextEditingController emailController = TextEditingController();
@@ -41,10 +43,12 @@ class _UserRegisterState extends State<UserRegister> with SingleTickerProviderSt
       setState(() => _isLoading = true);
       try {
         // Hash the password using crypt package
-        String hashedPassword = Crypt.sha256(passwordController.text.trim()).toString();
+        String hashedPassword =
+            Crypt.sha256(passwordController.text.trim()).toString();
 
         // Create user in Firebase Authentication
-        UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        UserCredential userCredential =
+            await FirebaseAuth.instance.createUserWithEmailAndPassword(
           email: emailController.text.trim(),
           password: passwordController.text.trim(),
         );
@@ -61,7 +65,7 @@ class _UserRegisterState extends State<UserRegister> with SingleTickerProviderSt
           'age': ageController.text.trim(),
           'level': levelController.text.trim(),
           'dob': selectedDate != null ? selectedDate!.toIso8601String() : "",
-          'password': hashedPassword,  // Storing the hashed password
+          'password': hashedPassword, // Storing the hashed password
         });
 
         /////change4
@@ -93,17 +97,19 @@ class _UserRegisterState extends State<UserRegister> with SingleTickerProviderSt
   }
 
   Future<void> _pickDateOfBirth() async {
+    final today = DateTime.now();
     DateTime? picked = await showDatePicker(
       context: context,
       initialDate: DateTime(2000),
       firstDate: DateTime(1950),
-      lastDate: DateTime.now(),
+      lastDate: DateTime(today.year, today.month, today.day),
     );
     if (picked != null) {
       selectedDate = picked;
       int age = DateTime.now().year - picked.year;
       if (DateTime.now().month < picked.month ||
-          (DateTime.now().month == picked.month && DateTime.now().day < picked.day)) {
+          (DateTime.now().month == picked.month &&
+              DateTime.now().day < picked.day)) {
         age--;
       }
       ageController.text = age.toString();
@@ -127,6 +133,9 @@ class _UserRegisterState extends State<UserRegister> with SingleTickerProviderSt
       return 'Please select your date of birth';
     }
     int age = int.tryParse(value) ?? 0;
+    if (age <= 0) {
+      return 'Age must be greater than 0';
+    }
     if (age < 18) {
       return 'You must be at least 18 years old';
     }
@@ -139,13 +148,37 @@ class _UserRegisterState extends State<UserRegister> with SingleTickerProviderSt
     }
 
     // Case-insensitive regex pattern to match "xxJxxxx@utas.edu.om" format
-    if (!RegExp(r'\b[0-9]{2,3}[JjSs][0-9]+@utas\.edu\.om\b', caseSensitive: false).hasMatch(value)) {
+    if (!RegExp(r'\b[0-9]{2,3}[JjSs][0-9]+@utas\.edu\.om\b',
+            caseSensitive: false)
+        .hasMatch(value)) {
       return 'Please enter a valid email address in the format "xxJ/Sxxxx@utas.edu.om"';
     }
 
     return null;
   }
 
+  String? passwordValidator(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Please enter your password';
+    }
+    if (value.length < 8) {
+      return 'Password must be at least 8 characters';
+    }
+    if (!RegExp(r'[A-Z]').hasMatch(value)) {
+      return 'Password must include an uppercase letter';
+    }
+    if (!RegExp(r'[a-z]').hasMatch(value)) {
+      return 'Password must include a lowercase letter';
+    }
+    if (!RegExp(r'[0-9]').hasMatch(value)) {
+      return 'Password must include a number';
+    }
+    if (!RegExp(r"[!@#\$%\^&\*\(\)_\+\-=\[\]\{\};:',.<>\/\?\\|`~]")
+        .hasMatch(value)) {
+      return 'Password must include a special character';
+    }
+    return null;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -196,6 +229,10 @@ class _UserRegisterState extends State<UserRegister> with SingleTickerProviderSt
                     Icons.person,
                     backgroundLight,
                     validator: fullNameValidator,
+                    textCapitalization: TextCapitalization.words,
+                    inputFormatters: [
+                      FilteringTextInputFormatter.allow(RegExp(r'[A-Za-z\s]')),
+                    ],
                   ),
 
                   const SizedBox(height: 15),
@@ -238,10 +275,16 @@ class _UserRegisterState extends State<UserRegister> with SingleTickerProviderSt
                       ),
                       hint: const Text("Current Level of Study"),
                       items: const [
-                        DropdownMenuItem(value: "Foundation", child: Text("Foundation")),
-                        DropdownMenuItem(value: "Diploma", child: Text("Diploma")),
-                        DropdownMenuItem(value: "Higher Diploma", child: Text("Higher Diploma")),
-                        DropdownMenuItem(value: "Bachelor's Degree", child: Text("Bachelor's Degree")),
+                        DropdownMenuItem(
+                            value: "Foundation", child: Text("Foundation")),
+                        DropdownMenuItem(
+                            value: "Diploma", child: Text("Diploma")),
+                        DropdownMenuItem(
+                            value: "Higher Diploma",
+                            child: Text("Higher Diploma")),
+                        DropdownMenuItem(
+                            value: "Bachelor's Degree",
+                            child: Text("Bachelor's Degree")),
                       ],
                       onChanged: (value) {
                         setState(() {
@@ -249,8 +292,9 @@ class _UserRegisterState extends State<UserRegister> with SingleTickerProviderSt
                           levelController.text = value ?? "";
                         });
                       },
-                      validator: (value) =>
-                      value == null || value.isEmpty ? "Please select your level" : null,
+                      validator: (value) => value == null || value.isEmpty
+                          ? "Please select your level"
+                          : null,
                     ),
                   ),
 
@@ -264,6 +308,9 @@ class _UserRegisterState extends State<UserRegister> with SingleTickerProviderSt
                     backgroundLight,
                     keyboardType: TextInputType.emailAddress,
                     validator: emailValidator,
+                    inputFormatters: [
+                      FilteringTextInputFormatter.deny(RegExp(r'\s')),
+                    ],
                   ),
 
                   const SizedBox(height: 15),
@@ -277,14 +324,15 @@ class _UserRegisterState extends State<UserRegister> with SingleTickerProviderSt
                     obscureText: _obscurePassword,
                     suffixIcon: IconButton(
                       icon: Icon(
-                        _obscurePassword ? Icons.visibility_off : Icons.visibility,
+                        _obscurePassword
+                            ? Icons.visibility_off
+                            : Icons.visibility,
                         color: accentBlue,
                       ),
-                      onPressed: () => setState(() => _obscurePassword = !_obscurePassword),
+                      onPressed: () =>
+                          setState(() => _obscurePassword = !_obscurePassword),
                     ),
-                    validator: (v) => v == null || v.length < 6
-                        ? "Password must be at least 6 characters"
-                        : null,
+                    validator: passwordValidator,
                   ),
 
                   const SizedBox(height: 30),
@@ -319,15 +367,16 @@ class _UserRegisterState extends State<UserRegister> with SingleTickerProviderSt
                           ),
                         ),
                         child: _isLoading
-                            ? const CircularProgressIndicator(color: Colors.white)
+                            ? const CircularProgressIndicator(
+                                color: Colors.white)
                             : const Text(
-                          "Register",
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                          ),
-                        ),
+                                "Register",
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white,
+                                ),
+                              ),
                       ),
                     ),
                   ),
@@ -343,7 +392,8 @@ class _UserRegisterState extends State<UserRegister> with SingleTickerProviderSt
                         onTap: () {
                           Navigator.pushReplacement(
                             context,
-                            MaterialPageRoute(builder: (context) => const LoginPage()),
+                            MaterialPageRoute(
+                                builder: (context) => const LoginPage()),
                           );
                         },
                         child: Text(
@@ -367,17 +417,19 @@ class _UserRegisterState extends State<UserRegister> with SingleTickerProviderSt
   }
 
   Widget _buildTextField(
-      TextEditingController controller,
-      String hintText,
-      IconData icon,
-      Color fillColor, {
-        bool obscureText = false,
-        Widget? suffixIcon,
-        bool readOnly = false,
-        VoidCallback? onTap,
-        TextInputType keyboardType = TextInputType.text,
-        String? Function(String?)? validator,
-      }) {
+    TextEditingController controller,
+    String hintText,
+    IconData icon,
+    Color fillColor, {
+    bool obscureText = false,
+    Widget? suffixIcon,
+    bool readOnly = false,
+    VoidCallback? onTap,
+    TextInputType keyboardType = TextInputType.text,
+    TextCapitalization textCapitalization = TextCapitalization.none,
+    List<TextInputFormatter>? inputFormatters,
+    String? Function(String?)? validator,
+  }) {
     const Color accentBlue = Color(0xFF3C5BAA);
 
     return Container(
@@ -398,6 +450,8 @@ class _UserRegisterState extends State<UserRegister> with SingleTickerProviderSt
         readOnly: readOnly,
         onTap: onTap,
         keyboardType: keyboardType,
+        textCapitalization: textCapitalization,
+        inputFormatters: inputFormatters,
         decoration: InputDecoration(
           hintText: hintText,
           prefixIcon: Icon(icon, color: accentBlue),
@@ -405,7 +459,8 @@ class _UserRegisterState extends State<UserRegister> with SingleTickerProviderSt
           border: InputBorder.none,
           filled: true,
           fillColor: fillColor,
-          contentPadding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+          contentPadding:
+              const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
         ),
         validator: validator,
       ),

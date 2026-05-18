@@ -1,5 +1,6 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_firebase_app_2/otpVerification.dart';
 import 'package:flutter_firebase_app_2/notifications_helper.dart';
@@ -12,6 +13,7 @@ class ForgotPasswordPage extends StatefulWidget {
 }
 
 class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
+  final _formKey = GlobalKey<FormState>();
   final TextEditingController emailController = TextEditingController();
   bool _isLoading = false;
 
@@ -40,19 +42,11 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
   }
 
   Future<void> _checkEmailAndSendOtp() async {
-    final rawEmail = emailController.text.trim();
-    final email = rawEmail.toLowerCase();
-
-    // Validate email format using the emailValidator function
-    final emailError = emailValidator(rawEmail);
-    if (emailError != null) {
-      _showMessageDialog(
-        title: 'Invalid Email',
-        message: emailError,
-        isError: true,
-      );
+    if (!(_formKey.currentState?.validate() ?? false)) {
       return;
     }
+    final rawEmail = emailController.text.trim();
+    final email = rawEmail.toLowerCase();
 
     setState(() => _isLoading = true);
 
@@ -139,9 +133,12 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
+        child: Form(
+          key: _formKey,
+          autovalidateMode: AutovalidateMode.onUserInteraction,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
             const SizedBox(height: 40),
             // Title
             const Text(
@@ -153,9 +150,13 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
             ),
             const SizedBox(height: 30),
             // Email Input Field
-            TextField(
+            TextFormField(
               controller: emailController,
               keyboardType: TextInputType.emailAddress,
+              inputFormatters: [
+                FilteringTextInputFormatter.deny(RegExp(r'\s')),
+              ],
+              validator: emailValidator,
               decoration: InputDecoration(
                 labelText: "Email Address",
                 prefixIcon: const Icon(Icons.email, color: Color(0xFF3A4A91)),
@@ -190,7 +191,8 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                 ),
               ),
             ),
-          ],
+            ],
+          ),
         ),
       ),
     );

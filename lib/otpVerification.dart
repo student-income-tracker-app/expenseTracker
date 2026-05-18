@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_firebase_app_2/resetPassword.dart';
 
 class OtpVerificationPage extends StatefulWidget {
@@ -16,6 +17,7 @@ class OtpVerificationPage extends StatefulWidget {
 }
 
 class _OtpVerificationPageState extends State<OtpVerificationPage> {
+  final _formKey = GlobalKey<FormState>();
   final TextEditingController otpController = TextEditingController();
   bool _isVerifying = false;
 
@@ -26,16 +28,10 @@ class _OtpVerificationPageState extends State<OtpVerificationPage> {
   }
 
   Future<void> _verifyOtp() async {
-    final enteredOtp = otpController.text.trim();
-
-    if (enteredOtp.isEmpty || enteredOtp.length != 6) {
-      _showMessageDialog(
-        title: 'Invalid Code',
-        message: 'Please enter a valid 6-digit code.',
-        isError: true,
-      );
+    if (!(_formKey.currentState?.validate() ?? false)) {
       return;
     }
+    final enteredOtp = otpController.text.trim();
 
     setState(() => _isVerifying = true);
 
@@ -108,17 +104,31 @@ class _OtpVerificationPageState extends State<OtpVerificationPage> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(20),
-        child: Column(
-          children: [
+        child: Form(
+          key: _formKey,
+          autovalidateMode: AutovalidateMode.onUserInteraction,
+          child: Column(
+            children: [
             Text(
               "Enter the 6-digit code sent to ${widget.email}",
               style: const TextStyle(fontSize: 16),
             ),
             const SizedBox(height: 30),
-            TextField(
+            TextFormField(
               controller: otpController,
               keyboardType: TextInputType.number,
               maxLength: 6,
+              inputFormatters: [
+                FilteringTextInputFormatter.digitsOnly,
+                LengthLimitingTextInputFormatter(6),
+              ],
+              validator: (value) {
+                final v = value?.trim() ?? '';
+                if (v.isEmpty || v.length != 6) {
+                  return 'Please enter a valid 6-digit code.';
+                }
+                return null;
+              },
               decoration: const InputDecoration(
                 labelText: "Verification Code",
                 border: OutlineInputBorder(),
@@ -144,7 +154,8 @@ class _OtpVerificationPageState extends State<OtpVerificationPage> {
                 ),
               ),
             ),
-          ],
+            ],
+          ),
         ),
       ),
     );
