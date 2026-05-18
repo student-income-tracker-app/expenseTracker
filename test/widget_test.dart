@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+<<<<<<< HEAD
 import 'package:flutter_firebase_app_2/AIChatbot.dart';
 import 'package:flutter_firebase_app_2/AddIncome.dart';
 import 'package:flutter_firebase_app_2/AddExpense.dart';
@@ -36,6 +37,14 @@ void main() {
   });
 
   testWidgets('Add income rejects zero amount', (WidgetTester tester) async {
+=======
+import 'package:flutter_firebase_app_2/AddIncome.dart';
+import 'package:flutter_firebase_app_2/AddExpense.dart';
+import 'package:flutter_firebase_app_2/DetailedStatement.dart';
+
+void main() {
+  testWidgets('Add income validates amount', (WidgetTester tester) async {
+>>>>>>> 871b46f34f1a7a0221a9e584e9289562bdeac8b0
     await tester.pumpWidget(const MaterialApp(home: AddIncomePage()));
 
     await tester.enterText(find.byType(TextField).first, '0');
@@ -45,6 +54,7 @@ void main() {
     expect(find.text('Please enter a valid amount'), findsOneWidget);
   });
 
+<<<<<<< HEAD
   testWidgets('Add income accepts valid amount format',
       (WidgetTester tester) async {
     await tester.pumpWidget(const MaterialApp(home: AddIncomePage()));
@@ -217,6 +227,10 @@ void main() {
     await tester.pumpWidget(
       const MaterialApp(home: AddExpensePage(initialCategory: 'Food')),
     );
+=======
+  testWidgets('Add expense validates amount', (WidgetTester tester) async {
+    await tester.pumpWidget(const MaterialApp(home: AddExpensePage(initialCategory: 'Food')));
+>>>>>>> 871b46f34f1a7a0221a9e584e9289562bdeac8b0
 
     await tester.enterText(find.byType(TextField).first, '0');
     await tester.tap(find.text('Add'));
@@ -225,6 +239,7 @@ void main() {
     expect(find.text('Please enter a valid amount'), findsOneWidget);
   });
 
+<<<<<<< HEAD
   testWidgets('Add expense rejects leading zero amount',
       (WidgetTester tester) async {
     await tester.pumpWidget(
@@ -250,6 +265,9 @@ void main() {
 
   testWidgets('Update expense validates budget amount',
       (WidgetTester tester) async {
+=======
+  testWidgets('Update expense validates budget', (WidgetTester tester) async {
+>>>>>>> 871b46f34f1a7a0221a9e584e9289562bdeac8b0
     await tester.pumpWidget(
       const MaterialApp(
         home: AddExpensePage(
@@ -264,6 +282,7 @@ void main() {
     await tester.tap(find.text('Update'));
     await tester.pump();
 
+<<<<<<< HEAD
     expect(find.text('Please enter a valid amount'), findsOneWidget);
   });
 
@@ -298,12 +317,22 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(find.text('OK'));
     await tester.pumpAndSettle();
+=======
+    expect(find.text('Please enter valid data'), findsOneWidget);
+  });
+
+  testWidgets('Detailed statement search shows results only after search', (WidgetTester tester) async {
+    await tester.pumpWidget(const MaterialApp(home: DetailedStatementPage()));
+
+    expect(find.text('Choose a date range and tap Search.'), findsOneWidget);
+>>>>>>> 871b46f34f1a7a0221a9e584e9289562bdeac8b0
 
     await tester.tap(find.text('Search'));
     await tester.pump();
 
     expect(find.text('No transactions found.'), findsOneWidget);
   });
+<<<<<<< HEAD
 
   testWidgets('Search transactions: sort by latest',
       (WidgetTester tester) async {
@@ -496,4 +525,6 @@ void main() {
 
     expect(find.text('Open dashboard and click Add Expense.'), findsOneWidget);
   });
+=======
+>>>>>>> 871b46f34f1a7a0221a9e584e9289562bdeac8b0
 }

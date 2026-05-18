@@ -11,6 +11,7 @@ class AIChatbotPage extends StatefulWidget {
 
 class _AIChatbotPageState extends State<AIChatbotPage> {
   final TextEditingController _messageController = TextEditingController();
+<<<<<<< HEAD
   final List<_ChatMessage> _messages = [
     const _ChatMessage(
       text:
@@ -174,6 +175,21 @@ class _AIChatbotPageState extends State<AIChatbotPage> {
   @override
   Widget build(BuildContext context) {
     final palette = AppPalette.of(context);
+=======
+
+  void _sendMessage() {
+    if (_messageController.text.trim().isNotEmpty) {
+      print(_messageController.text);
+      _messageController.clear();
+    }
+  }
+
+  
+  @override
+  Widget build(BuildContext context) {
+    final palette = AppPalette.of(context);
+
+>>>>>>> 871b46f34f1a7a0221a9e584e9289562bdeac8b0
     return Scaffold(
       backgroundColor: palette.background,
       appBar: AppBar(
@@ -186,6 +202,7 @@ class _AIChatbotPageState extends State<AIChatbotPage> {
         centerTitle: true,
         title: Column(
           children: [
+<<<<<<< HEAD
             Icon(Icons.account_balance_wallet_outlined, color: palette.primary),
             const SizedBox(height: 4),
             Text(
@@ -194,6 +211,20 @@ class _AIChatbotPageState extends State<AIChatbotPage> {
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
                   color: palette.primary),
+=======
+            Icon(
+              Icons.account_balance_wallet_outlined,
+              color: palette.primary,
+            ),
+            const SizedBox(height: 4),
+            Text(
+              'AI Chatbot',
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: palette.primary,
+              ),
+>>>>>>> 871b46f34f1a7a0221a9e584e9289562bdeac8b0
             ),
           ],
         ),
@@ -203,14 +234,22 @@ class _AIChatbotPageState extends State<AIChatbotPage> {
           children: [
             Expanded(
               child: Padding(
+<<<<<<< HEAD
                 padding:
                     const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+=======
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 20,
+                  vertical: 10,
+                ),
+>>>>>>> 871b46f34f1a7a0221a9e584e9289562bdeac8b0
                 child: Container(
                   padding: const EdgeInsets.all(14),
                   decoration: BoxDecoration(
                     color: palette.bubbleFill,
                     borderRadius: BorderRadius.circular(14),
                   ),
+<<<<<<< HEAD
                   child: ListView.separated(
                     itemCount: _messages.length,
                     separatorBuilder: (_, __) => const SizedBox(height: 10),
@@ -226,10 +265,35 @@ class _AIChatbotPageState extends State<AIChatbotPage> {
                         ),
                       );
                     },
+=======
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: const [
+                      _ChatBubble(
+                        text: 'Hey 👋 how can I help you',
+                        isUser: false,
+                      ),
+                      SizedBox(height: 10),
+                      Align(
+                        alignment: Alignment.centerRight,
+                        child: _ChatBubble(
+                          text: 'How to add income',
+                          isUser: true,
+                        ),
+                      ),
+                      SizedBox(height: 10),
+                      _ChatBubble(
+                        text:
+                        'First you need to add amount in payment card, then go to home, click add income and enter your income source name and amount.',
+                        isUser: false,
+                      ),
+                    ],
+>>>>>>> 871b46f34f1a7a0221a9e584e9289562bdeac8b0
                   ),
                 ),
               ),
             ),
+<<<<<<< HEAD
             Padding(
               padding: const EdgeInsets.fromLTRB(20, 0, 20, 10),
               child: Wrap(
@@ -243,6 +307,9 @@ class _AIChatbotPageState extends State<AIChatbotPage> {
                 ],
               ),
             ),
+=======
+
+>>>>>>> 871b46f34f1a7a0221a9e584e9289562bdeac8b0
             Padding(
               padding: const EdgeInsets.fromLTRB(20, 0, 20, 16),
               child: Container(
@@ -250,31 +317,60 @@ class _AIChatbotPageState extends State<AIChatbotPage> {
                 decoration: BoxDecoration(
                   color: palette.inputFill,
                   borderRadius: BorderRadius.circular(24),
+<<<<<<< HEAD
                   border: Border.all(color: palette.primary.withOpacity(0.2)),
+=======
+                  border: Border.all(
+                    color: palette.primary.withOpacity(0.2),
+                  ),
+>>>>>>> 871b46f34f1a7a0221a9e584e9289562bdeac8b0
                 ),
                 child: Row(
                   children: [
                     Expanded(
                       child: TextField(
                         controller: _messageController,
+<<<<<<< HEAD
                         onSubmitted: (_) => _sendMessage(),
                         inputFormatters: [
                           FilteringTextInputFormatter.allow(
                             RegExp(r'[A-Za-z0-9\u0600-\u06FF\s\.\,\!\?\-]'),
+=======
+                        inputFormatters: [
+                          FilteringTextInputFormatter.allow(
+                            RegExp(r'[A-Za-z0-9\s\.\,\!\?\-]'),
+>>>>>>> 871b46f34f1a7a0221a9e584e9289562bdeac8b0
                           ),
                         ],
                         style: TextStyle(color: palette.primary),
                         decoration: InputDecoration(
+<<<<<<< HEAD
                           hintText: 'Ask about this app',
                           hintStyle: TextStyle(
                               color: palette.primary.withOpacity(0.6)),
+=======
+                          hintText: 'Type a message...',
+                          hintStyle: TextStyle(
+                            color: palette.primary.withOpacity(0.6),
+                          ),
+>>>>>>> 871b46f34f1a7a0221a9e584e9289562bdeac8b0
                           border: InputBorder.none,
                         ),
                       ),
                     ),
+<<<<<<< HEAD
                     IconButton(
                       onPressed: _sendMessage,
                       icon: Icon(Icons.send, color: palette.primary),
+=======
+
+                    IconButton(
+                      onPressed: _sendMessage,
+                      icon: Icon(
+                        Icons.send,
+                        color: palette.primary,
+                      ),
+>>>>>>> 871b46f34f1a7a0221a9e584e9289562bdeac8b0
                     ),
                   ],
                 ),
@@ -285,6 +381,7 @@ class _AIChatbotPageState extends State<AIChatbotPage> {
       ),
     );
   }
+<<<<<<< HEAD
 
   Widget _quickQuestionChip(String text) {
     final palette = AppPalette.of(context);
@@ -460,19 +557,37 @@ class _ChatMessage {
   final bool isUser;
 
   const _ChatMessage({required this.text, required this.isUser});
+=======
+>>>>>>> 871b46f34f1a7a0221a9e584e9289562bdeac8b0
 }
 
 class _ChatBubble extends StatelessWidget {
   final String text;
   final bool isUser;
 
+<<<<<<< HEAD
   const _ChatBubble({required this.text, required this.isUser});
+=======
+  const _ChatBubble({
+    required this.text,
+    required this.isUser,
+  });
+>>>>>>> 871b46f34f1a7a0221a9e584e9289562bdeac8b0
 
   @override
   Widget build(BuildContext context) {
     final palette = AppPalette.of(context);
+<<<<<<< HEAD
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+=======
+
+    return Container(
+      padding: const EdgeInsets.symmetric(
+        horizontal: 12,
+        vertical: 10,
+      ),
+>>>>>>> 871b46f34f1a7a0221a9e584e9289562bdeac8b0
       decoration: BoxDecoration(
         color: isUser ? palette.inputFill : palette.bubbleFill,
         borderRadius: BorderRadius.circular(16),
@@ -480,7 +595,14 @@ class _ChatBubble extends StatelessWidget {
       ),
       child: Text(
         text,
+<<<<<<< HEAD
         style: TextStyle(color: palette.primary),
+=======
+        style: TextStyle(
+          color: palette.primary,
+          fontSize: 15,
+        ),
+>>>>>>> 871b46f34f1a7a0221a9e584e9289562bdeac8b0
       ),
     );
   }

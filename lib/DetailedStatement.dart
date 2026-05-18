@@ -4,9 +4,16 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'app_palette.dart';
 
+<<<<<<< HEAD
 class DetailedStatementPage extends StatefulWidget {
   const DetailedStatementPage({super.key});
 
+=======
+
+class DetailedStatementPage extends StatefulWidget {
+  const DetailedStatementPage({super.key});
+  
+>>>>>>> 871b46f34f1a7a0221a9e584e9289562bdeac8b0
   @override
   State<DetailedStatementPage> createState() => _DetailedStatementPageState();
 }
@@ -30,30 +37,47 @@ class _DetailedStatementPageState extends State<DetailedStatementPage> {
   }
 
   Future<void> _pickFromDate() async {
+<<<<<<< HEAD
     final today = DateTime.now();
     final maxDate = _toDate.isAfter(today)
         ? DateTime(today.year, today.month, today.day)
         : _toDate;
+=======
+>>>>>>> 871b46f34f1a7a0221a9e584e9289562bdeac8b0
     final picked = await showDatePicker(
       context: context,
       initialDate: _fromDate,
       firstDate: DateTime(2000),
+<<<<<<< HEAD
       lastDate: maxDate,
     );
     if (picked != null) {
       setState(
           () => _fromDate = DateTime(picked.year, picked.month, picked.day));
+=======
+      lastDate: _toDate,
+    );
+    if (picked != null) {
+      setState(() => _fromDate = DateTime(picked.year, picked.month, picked.day));
+>>>>>>> 871b46f34f1a7a0221a9e584e9289562bdeac8b0
     }
   }
 
   Future<void> _pickToDate() async {
+<<<<<<< HEAD
     final today = DateTime.now();
     final maxDate = DateTime(today.year, today.month, today.day);
+=======
+>>>>>>> 871b46f34f1a7a0221a9e584e9289562bdeac8b0
     final picked = await showDatePicker(
       context: context,
       initialDate: _toDate,
       firstDate: _fromDate,
+<<<<<<< HEAD
       lastDate: maxDate,
+=======
+      lastDate: DateTime.now(),
+>>>>>>> 871b46f34f1a7a0221a9e584e9289562bdeac8b0
     );
     if (picked != null) {
       setState(() => _toDate = DateTime(picked.year, picked.month, picked.day));
@@ -100,6 +124,7 @@ class _DetailedStatementPageState extends State<DetailedStatementPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
+<<<<<<< HEAD
                 padding:
                     const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
                 decoration: BoxDecoration(
@@ -107,6 +132,13 @@ class _DetailedStatementPageState extends State<DetailedStatementPage> {
                   borderRadius: BorderRadius.circular(14),
                   border:
                       Border.all(color: palette.cardBorder.withOpacity(0.6)),
+=======
+                padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+                decoration: BoxDecoration(
+                  color: palette.cardFill,
+                  borderRadius: BorderRadius.circular(14),
+                  border: Border.all(color: palette.cardBorder.withOpacity(0.6)),
+>>>>>>> 871b46f34f1a7a0221a9e584e9289562bdeac8b0
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -157,21 +189,33 @@ class _DetailedStatementPageState extends State<DetailedStatementPage> {
                         ),
                         child: const Text(
                           'Search',
+<<<<<<< HEAD
                           style: TextStyle(
                               color: Colors.white, fontWeight: FontWeight.w600),
+=======
+                          style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600),
+>>>>>>> 871b46f34f1a7a0221a9e584e9289562bdeac8b0
                         ),
                       ),
                     ),
                     const SizedBox(height: 12),
                     _InfoRow(
+<<<<<<< HEAD
                       text:
                           'You will be able to search for a maximum of 3 months transactions at a given time.',
+=======
+                      text: 'You will be able to search for a maximum of 3 months transactions at a given time.',
+>>>>>>> 871b46f34f1a7a0221a9e584e9289562bdeac8b0
                       palette: palette,
                     ),
                     const SizedBox(height: 6),
                     _InfoRow(
+<<<<<<< HEAD
                       text:
                           'You can change the dates and search again in 3 months periods.',
+=======
+                      text: 'You can change the dates and search again in 3 months periods.',
+>>>>>>> 871b46f34f1a7a0221a9e584e9289562bdeac8b0
                       palette: palette,
                     ),
                   ],
@@ -180,15 +224,20 @@ class _DetailedStatementPageState extends State<DetailedStatementPage> {
               const SizedBox(height: 16),
               Text(
                 'Recent Transactions',
+<<<<<<< HEAD
                 style: TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.w600,
                     color: palette.primary),
+=======
+                style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600, color: palette.primary),
+>>>>>>> 871b46f34f1a7a0221a9e584e9289562bdeac8b0
               ),
               const SizedBox(height: 8),
               Align(
                 alignment: Alignment.centerRight,
                 child: Container(
+<<<<<<< HEAD
                   padding:
                       const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                   decoration: BoxDecoration(
@@ -196,6 +245,13 @@ class _DetailedStatementPageState extends State<DetailedStatementPage> {
                     borderRadius: BorderRadius.circular(18),
                     border:
                         Border.all(color: palette.cardBorder.withOpacity(0.6)),
+=======
+                  padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                  decoration: BoxDecoration(
+                    color: palette.cardFill,
+                    borderRadius: BorderRadius.circular(18),
+                    border: Border.all(color: palette.cardBorder.withOpacity(0.6)),
+>>>>>>> 871b46f34f1a7a0221a9e584e9289562bdeac8b0
                   ),
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
@@ -223,8 +279,12 @@ class _DetailedStatementPageState extends State<DetailedStatementPage> {
                     ? Center(
                         child: Text(
                           'Choose a date range and tap Search.',
+<<<<<<< HEAD
                           style: TextStyle(
                               color: palette.primary.withOpacity(0.7)),
+=======
+                          style: TextStyle(color: palette.primary.withOpacity(0.7)),
+>>>>>>> 871b46f34f1a7a0221a9e584e9289562bdeac8b0
                         ),
                       )
                     : StreamBuilder<DatabaseEvent>(
@@ -235,6 +295,7 @@ class _DetailedStatementPageState extends State<DetailedStatementPage> {
                           if (value is Map) {
                             final map = Map<String, dynamic>.from(value);
                             if (map['expenses'] is Map) {
+<<<<<<< HEAD
                               final expenseMap =
                                   Map<String, dynamic>.from(map['expenses']);
                               for (final entry in expenseMap.values) {
@@ -242,12 +303,23 @@ class _DetailedStatementPageState extends State<DetailedStatementPage> {
                                   final e = Map<String, dynamic>.from(entry);
                                   final category =
                                       (e['category'] ?? '').toString();
+=======
+                              final expenseMap = Map<String, dynamic>.from(map['expenses']);
+                              for (final entry in expenseMap.values) {
+                                if (entry is Map) {
+                                  final e = Map<String, dynamic>.from(entry);
+                                  final category = (e['category'] ?? '').toString();
+>>>>>>> 871b46f34f1a7a0221a9e584e9289562bdeac8b0
                                   final amount = e['amount'];
                                   final createdAt = e['createdAt'];
                                   if (amount is num) {
                                     final date = createdAt is int
+<<<<<<< HEAD
                                         ? DateTime.fromMillisecondsSinceEpoch(
                                             createdAt)
+=======
+                                        ? DateTime.fromMillisecondsSinceEpoch(createdAt)
+>>>>>>> 871b46f34f1a7a0221a9e584e9289562bdeac8b0
                                         : DateTime.now();
                                     items.add(_ReportEntry(
                                       title: category,
@@ -260,8 +332,12 @@ class _DetailedStatementPageState extends State<DetailedStatementPage> {
                               }
                             }
                             if (map['incomes'] is Map) {
+<<<<<<< HEAD
                               final incomeMap =
                                   Map<String, dynamic>.from(map['incomes']);
+=======
+                              final incomeMap = Map<String, dynamic>.from(map['incomes']);
+>>>>>>> 871b46f34f1a7a0221a9e584e9289562bdeac8b0
                               for (final entry in incomeMap.values) {
                                 if (entry is Map) {
                                   final e = Map<String, dynamic>.from(entry);
@@ -270,8 +346,12 @@ class _DetailedStatementPageState extends State<DetailedStatementPage> {
                                   final createdAt = e['createdAt'];
                                   if (amount is num) {
                                     final date = createdAt is int
+<<<<<<< HEAD
                                         ? DateTime.fromMillisecondsSinceEpoch(
                                             createdAt)
+=======
+                                        ? DateTime.fromMillisecondsSinceEpoch(createdAt)
+>>>>>>> 871b46f34f1a7a0221a9e584e9289562bdeac8b0
                                         : DateTime.now();
                                     items.add(_ReportEntry(
                                       title: source,
@@ -286,10 +366,19 @@ class _DetailedStatementPageState extends State<DetailedStatementPage> {
                           }
                           final fromKey = _dateKey(_activeFromDate);
                           final toKey = _dateKey(_activeToDate);
+<<<<<<< HEAD
                           final visible = items.where((entry) {
                             final entryKey = _dateKey(entry.date);
                             return entryKey >= fromKey && entryKey <= toKey;
                           }).toList()
+=======
+                          final visible = items
+                              .where((entry) {
+                                final entryKey = _dateKey(entry.date);
+                                return entryKey >= fromKey && entryKey <= toKey;
+                              })
+                              .toList()
+>>>>>>> 871b46f34f1a7a0221a9e584e9289562bdeac8b0
                             ..sort(
                               (a, b) => _sortNewestFirst
                                   ? b.date.compareTo(a.date)
@@ -297,8 +386,12 @@ class _DetailedStatementPageState extends State<DetailedStatementPage> {
                             );
                           if (visible.isEmpty) {
                             return Center(
+<<<<<<< HEAD
                               child: Text('No transactions found.',
                                   style: TextStyle(color: palette.primary)),
+=======
+                              child: Text('No transactions found.', style: TextStyle(color: palette.primary)),
+>>>>>>> 871b46f34f1a7a0221a9e584e9289562bdeac8b0
                             );
                           }
                           return ListView(
@@ -307,12 +400,19 @@ class _DetailedStatementPageState extends State<DetailedStatementPage> {
                                   (entry) => _ReportItem(
                                     title: entry.title,
                                     date: _formatDate(entry.date),
+<<<<<<< HEAD
                                     amount: entry.type ==
                                             _TransactionType.expense
                                         ? '-${entry.amount.toStringAsFixed(2)} OMR'
                                         : '+${entry.amount.toStringAsFixed(2)} OMR',
                                     isIncome:
                                         entry.type == _TransactionType.income,
+=======
+                                    amount: entry.type == _TransactionType.expense
+                                        ? '-${entry.amount.toStringAsFixed(2)} OMR'
+                                        : '+${entry.amount.toStringAsFixed(2)} OMR',
+                                    isIncome: entry.type == _TransactionType.income,
+>>>>>>> 871b46f34f1a7a0221a9e584e9289562bdeac8b0
                                     palette: palette,
                                   ),
                                 )
@@ -398,19 +498,29 @@ class _ReportItem extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+<<<<<<< HEAD
               Text(title,
                   style: TextStyle(
                       color: palette.primary, fontWeight: FontWeight.w600)),
               const SizedBox(height: 2),
               Text(date,
                   style: TextStyle(color: palette.primary, fontSize: 12)),
+=======
+              Text(title, style: TextStyle(color: palette.primary, fontWeight: FontWeight.w600)),
+              const SizedBox(height: 2),
+              Text(date, style: TextStyle(color: palette.primary, fontSize: 12)),
+>>>>>>> 871b46f34f1a7a0221a9e584e9289562bdeac8b0
             ],
           ),
           Text(
             amount,
             style: TextStyle(
+<<<<<<< HEAD
               color:
                   isIncome ? const Color(0xFF2E7D32) : const Color(0xFFC43A3A),
+=======
+              color: isIncome ? const Color(0xFF2E7D32) : const Color(0xFFC43A3A),
+>>>>>>> 871b46f34f1a7a0221a9e584e9289562bdeac8b0
               fontWeight: FontWeight.w600,
             ),
           ),
@@ -453,16 +563,24 @@ class _DateField extends StatelessWidget {
               children: [
                 Icon(icon, size: 14, color: palette.primary.withOpacity(0.7)),
                 const SizedBox(width: 6),
+<<<<<<< HEAD
                 Text(label,
                     style: TextStyle(
                         fontSize: 11, color: palette.primary.withOpacity(0.7))),
+=======
+                Text(label, style: TextStyle(fontSize: 11, color: palette.primary.withOpacity(0.7))),
+>>>>>>> 871b46f34f1a7a0221a9e584e9289562bdeac8b0
               ],
             ),
             const SizedBox(height: 6),
             Text(
               value,
+<<<<<<< HEAD
               style: TextStyle(
                   color: palette.primary, fontWeight: FontWeight.w700),
+=======
+              style: TextStyle(color: palette.primary, fontWeight: FontWeight.w700),
+>>>>>>> 871b46f34f1a7a0221a9e584e9289562bdeac8b0
             ),
           ],
         ),
@@ -482,14 +600,22 @@ class _InfoRow extends StatelessWidget {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+<<<<<<< HEAD
         Icon(Icons.info_outline,
             size: 14, color: palette.primary.withOpacity(0.5)),
+=======
+        Icon(Icons.info_outline, size: 14, color: palette.primary.withOpacity(0.5)),
+>>>>>>> 871b46f34f1a7a0221a9e584e9289562bdeac8b0
         const SizedBox(width: 6),
         Expanded(
           child: Text(
             text,
+<<<<<<< HEAD
             style: TextStyle(
                 color: palette.primary.withOpacity(0.6), fontSize: 11),
+=======
+            style: TextStyle(color: palette.primary.withOpacity(0.6), fontSize: 11),
+>>>>>>> 871b46f34f1a7a0221a9e584e9289562bdeac8b0
           ),
         ),
       ],

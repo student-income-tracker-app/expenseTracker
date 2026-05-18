@@ -3,17 +3,25 @@ import 'package:flutter/services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'app_palette.dart';
+<<<<<<< HEAD
 import 'Account.dart';
+=======
+>>>>>>> 871b46f34f1a7a0221a9e584e9289562bdeac8b0
 import 'AddIncome.dart';
 import 'AddExpense.dart';
 
 class HomePage extends StatefulWidget {
   final VoidCallback? onMenuTap;
+<<<<<<< HEAD
   final Map<String, double>? testIncomes;
   final Map<String, double>? testBudgets;
 
   const HomePage(
       {super.key, this.onMenuTap, this.testIncomes, this.testBudgets});
+=======
+
+  const HomePage({super.key, this.onMenuTap});
+>>>>>>> 871b46f34f1a7a0221a9e584e9289562bdeac8b0
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -23,15 +31,19 @@ class _HomePageState extends State<HomePage> {
   final TextEditingController _searchController = TextEditingController();
   String _searchQuery = '';
   bool _cleanupDone = false;
+<<<<<<< HEAD
   Map<String, double>? _testIncomes;
   Map<String, double>? _testBudgets;
 
   bool get _isTestMode =>
       widget.testIncomes != null || widget.testBudgets != null;
+=======
+>>>>>>> 871b46f34f1a7a0221a9e584e9289562bdeac8b0
 
   @override
   void initState() {
     super.initState();
+<<<<<<< HEAD
     if (_isTestMode) {
       _testIncomes = {
         'Salary': 0,
@@ -44,6 +56,9 @@ class _HomePageState extends State<HomePage> {
     } else {
       _cleanupDeprecatedCategories();
     }
+=======
+    _cleanupDeprecatedCategories();
+>>>>>>> 871b46f34f1a7a0221a9e584e9289562bdeac8b0
   }
 
   @override
@@ -55,6 +70,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     final palette = AppPalette.of(context);
+<<<<<<< HEAD
     if (widget.testIncomes != null || widget.testBudgets != null) {
       return SingleChildScrollView(
         padding: const EdgeInsets.fromLTRB(16, 18, 16, 8),
@@ -66,6 +82,8 @@ class _HomePageState extends State<HomePage> {
       );
     }
 
+=======
+>>>>>>> 871b46f34f1a7a0221a9e584e9289562bdeac8b0
     final user = FirebaseAuth.instance.currentUser;
     final userRef = user == null
         ? null
@@ -77,6 +95,13 @@ class _HomePageState extends State<HomePage> {
         builder: (context, snapshot) {
           final data = snapshot.data?.snapshot.value;
           final incomes = <String, double>{'Salary': 0, 'Allowance': 0};
+<<<<<<< HEAD
+=======
+          final expenses = <String, double>{
+            'Food': 0,
+            'Shopping': 0,
+          };
+>>>>>>> 871b46f34f1a7a0221a9e584e9289562bdeac8b0
           final budgets = <String, double>{};
 
           if (data is Map) {
@@ -89,8 +114,27 @@ class _HomePageState extends State<HomePage> {
                   final source = (e['source'] ?? '').toString();
                   final amount = e['amount'];
                   if (amount is num) {
+<<<<<<< HEAD
                     incomes[source] =
                         (incomes[source] ?? 0) + amount.toDouble();
+=======
+                    incomes[source] = (incomes[source] ?? 0) + amount.toDouble();
+                  }
+                }
+              }
+            }
+
+            if (map['expenses'] is Map) {
+              final expenseMap = Map<String, dynamic>.from(map['expenses']);
+              for (final entry in expenseMap.values) {
+                if (entry is Map) {
+                  final e = Map<String, dynamic>.from(entry);
+                  final category = (e['category'] ?? '').toString();
+                  final amount = e['amount'];
+                  if (amount is num && expenses.containsKey(category)) {
+                    expenses[category] =
+                        (expenses[category] ?? 0) + amount.toDouble();
+>>>>>>> 871b46f34f1a7a0221a9e584e9289562bdeac8b0
                   }
                 }
               }
@@ -108,13 +152,142 @@ class _HomePageState extends State<HomePage> {
             }
           }
 
+<<<<<<< HEAD
           return _buildDashboardContent(palette,
               incomes: incomes, budgets: budgets);
+=======
+          final query = _searchQuery.trim().toLowerCase();
+          double _displayAmount(String category) {
+            return budgets[category] ?? 0.0;
+          }
+
+          final incomeItems = incomes.entries
+              .map(
+                (entry) => _CategoryData(
+                  title: entry.key,
+                  amount: '${entry.value.toStringAsFixed(3)} OMR',
+                ),
+              )
+              .toList()
+            ..sort((a, b) => a.title.compareTo(b.title));
+          final defaultCategories = ['Food', 'Shopping'];
+          final allCategories = <String>{
+            ...defaultCategories,
+            ...budgets.keys,
+          }.toList()
+            ..sort();
+
+          final expenseItems = allCategories
+              .map(
+                (category) => _CategoryData(
+                  title: category,
+                  amount: '${_displayAmount(category).toStringAsFixed(3)} OMR',
+                ),
+              )
+              .toList();
+
+          bool _matches(_CategoryData item) {
+            if (query.isEmpty) return true;
+            final title = item.title.toLowerCase();
+            final amount = item.amount.toLowerCase();
+            return title.contains(query) || amount.contains(query);
+          }
+
+          final filteredIncome = incomeItems.where(_matches).toList();
+          final filteredExpense = expenseItems.where(_matches).toList();
+
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              IconButton(
+                icon: Icon(Icons.menu, color: palette.primary),
+                onPressed: widget.onMenuTap,
+              ),
+              const SizedBox(height: 6),
+              _buildSearchBar(
+                palette,
+                suggestions: () {
+                  final ordered = <String>[];
+                  void addUnique(String value) {
+                    if (!ordered.contains(value)) {
+                      ordered.add(value);
+                    }
+                  }
+
+                  for (final item in incomeItems) {
+                    addUnique(item.title);
+                  }
+                  for (final item in expenseItems) {
+                    addUnique(item.title);
+                  }
+                  return ordered;
+                }(),
+              ),
+              const SizedBox(height: 10),
+              _buildSectionTitle('Income', palette),
+              const SizedBox(height: 10),
+              _buildGrid(
+                filteredIncome,
+                palette,
+                onDelete: (title) => _confirmDelete(
+                  context,
+                  onConfirm: () => _deleteIncomeSource(context, title),
+                ),
+                onEdit: (title) {
+                  final currentAmount = incomes[title] ?? 0.0;
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => AddIncomePage(
+                        initialSource: title,
+                        initialAmount: currentAmount,
+                      ),
+                    ),
+                  );
+                },
+              ),
+              const SizedBox(height: 20),
+              _buildSectionTitle('Expense', palette),
+              const SizedBox(height: 10),
+              _buildGrid(
+                filteredExpense,
+                palette,
+                onDelete: (title) => _confirmDelete(
+                  context,
+                  onConfirm: () => _deleteCategoryBudget(context, title),
+                ),
+                onTap: (title) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (_) => AddExpensePage(initialCategory: title)),
+                  );
+                },
+                onEdit: (title) {
+                  final currentBudget = budgets[title] ?? 0.0;
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => AddExpensePage(
+                        initialCategory: title,
+                        editBudget: true,
+                        initialBudget: currentBudget,
+                      ),
+                    ),
+                  );
+                },
+              ),
+              const SizedBox(height: 22),
+              _buildAddActions(palette),
+            ],
+          );
+>>>>>>> 871b46f34f1a7a0221a9e584e9289562bdeac8b0
         },
       ),
     );
   }
 
+<<<<<<< HEAD
   Widget _buildDashboardContent(
     AppPalette palette, {
     required Map<String, double> incomes,
@@ -275,6 +448,8 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+=======
+>>>>>>> 871b46f34f1a7a0221a9e584e9289562bdeac8b0
   Widget _buildSearchBar(AppPalette palette,
       {required List<String> suggestions}) {
     return LayoutBuilder(
@@ -524,6 +699,7 @@ class _HomePageState extends State<HomePage> {
     final userRef = FirebaseDatabase.instance.ref('users/${user.uid}');
 
     final budgetSnap = await userRef.child('budgets/$category').get();
+<<<<<<< HEAD
     final remainingBudget = budgetSnap.value is num
         ? (budgetSnap.value as num).toDouble()
         : 0.0;
@@ -545,6 +721,39 @@ class _HomePageState extends State<HomePage> {
     if (!context.mounted) return;
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(content: Text('$category budget deleted')),
+=======
+    final budgetValue =
+        budgetSnap.value is num ? (budgetSnap.value as num).toDouble() : null;
+    await userRef.child('budgets/$category').remove();
+
+    if (budgetValue != null && budgetValue > 0) {
+      final netRef = userRef.child('account/netWorth');
+      await netRef.runTransaction((current) {
+        final currentValue = (current is num) ? current.toDouble() : 0.0;
+        return Transaction.success(currentValue + budgetValue);
+      });
+    }
+
+    final expensesSnap = await userRef.child('expenses').get();
+    if (expensesSnap.value is Map) {
+      final expenseMap = Map<String, dynamic>.from(expensesSnap.value as Map);
+      for (final entry in expenseMap.entries) {
+        final value = entry.value;
+        if (value is Map) {
+          final e = Map<String, dynamic>.from(value);
+          if ((e['category'] ?? '').toString() == category) {
+            await userRef.child('expenses/${entry.key}').remove();
+          }
+        }
+      }
+    }
+
+    await _recalculateNetWorth(userRef);
+
+    if (!context.mounted) return;
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('$category deleted')),
+>>>>>>> 871b46f34f1a7a0221a9e584e9289562bdeac8b0
     );
   }
 
@@ -574,12 +783,20 @@ class _HomePageState extends State<HomePage> {
       final netRef = userRef.child('account/netWorth');
       await netRef.runTransaction((current) {
         final currentValue = (current is num) ? current.toDouble() : 0.0;
+<<<<<<< HEAD
         final updatedValue = currentValue - removedTotal;
         return Transaction.success(updatedValue < 0 ? 0.0 : updatedValue);
       });
     }
 
     await reconcileNetWorth(userRef);
+=======
+        return Transaction.success(currentValue - removedTotal);
+      });
+    }
+
+    await _recalculateNetWorth(userRef);
+>>>>>>> 871b46f34f1a7a0221a9e584e9289562bdeac8b0
 
     if (!context.mounted) return;
     ScaffoldMessenger.of(context).showSnackBar(
@@ -716,9 +933,44 @@ class _HomePageState extends State<HomePage> {
         }
       }
     }
+<<<<<<< HEAD
   }
 }
 
+=======
+
+    await _recalculateNetWorth(userRef);
+  }
+}
+
+Future<void> _recalculateNetWorth(DatabaseReference userRef) async {
+  final incomesSnap = await userRef.child('incomes').get();
+  double totalIncome = 0;
+  if (incomesSnap.value is Map) {
+    final incomeMap = Map<String, dynamic>.from(incomesSnap.value as Map);
+    for (final entry in incomeMap.values) {
+      if (entry is Map) {
+        final e = Map<String, dynamic>.from(entry);
+        final amount = e['amount'];
+        if (amount is num) totalIncome += amount.toDouble();
+      }
+    }
+  }
+
+  final budgetsSnap = await userRef.child('budgets').get();
+  double totalBudgets = 0;
+  if (budgetsSnap.value is Map) {
+    final budgetMap = Map<String, dynamic>.from(budgetsSnap.value as Map);
+    for (final value in budgetMap.values) {
+      if (value is num) totalBudgets += value.toDouble();
+    }
+  }
+
+  final netRef = userRef.child('account/netWorth');
+  await netRef.set(totalIncome - totalBudgets);
+}
+
+>>>>>>> 871b46f34f1a7a0221a9e584e9289562bdeac8b0
 class _CategoryData {
   final String title;
   final String amount;

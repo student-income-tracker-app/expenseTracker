@@ -6,6 +6,7 @@ import 'app_palette.dart';
 import 'app_settings.dart';
 import 'notifications_helper.dart';
 
+<<<<<<< HEAD
 double calculateRemainingBudget(double currentBudget, double expenseAmount) {
   return currentBudget - expenseAmount;
 }
@@ -37,6 +38,8 @@ double totalIncomeFromUserData(dynamic userData) {
   return total;
 }
 
+=======
+>>>>>>> 871b46f34f1a7a0221a9e584e9289562bdeac8b0
 class AddExpensePage extends StatefulWidget {
   final String? initialCategory;
   final bool editBudget;
@@ -65,11 +68,14 @@ class _AddExpensePageState extends State<AddExpensePage> {
   DateTime? _selectedDate;
   bool _saving = false;
   static const List<String> _defaultCategories = ['Food', 'Shopping'];
+<<<<<<< HEAD
   bool _isAfterToday(DateTime date, DateTime now) {
     final today = DateTime(now.year, now.month, now.day);
     final selectedDay = DateTime(date.year, date.month, date.day);
     return selectedDay.isAfter(today);
   }
+=======
+>>>>>>> 871b46f34f1a7a0221a9e584e9289562bdeac8b0
 
   String? _validateAmount(String raw) {
     if (raw.isEmpty) return 'Please enter a valid amount';
@@ -137,8 +143,12 @@ class _AddExpensePageState extends State<AddExpensePage> {
       final categoryName = _category == 'Others'
           ? _categoryNameController.text.trim()
           : _category;
+<<<<<<< HEAD
       final categoryError =
           _category == 'Others' ? _validateCategoryName(categoryName) : null;
+=======
+      final categoryError = _category == 'Others' ? _validateCategoryName(categoryName) : null;
+>>>>>>> 871b46f34f1a7a0221a9e584e9289562bdeac8b0
       final rawBudget = _budgetController.text.trim();
       final budgetError = _validateAmount(rawBudget);
       if (categoryError != null || budgetError != null) {
@@ -193,6 +203,7 @@ class _AddExpensePageState extends State<AddExpensePage> {
     final amountError = _validateAmount(rawAmount);
     if (amountError != null) return;
     if (_selectedDate == null) return;
+<<<<<<< HEAD
     final now = DateTime.now();
     if (_isAfterToday(_selectedDate!, now)) {
       if (!mounted) return;
@@ -204,6 +215,8 @@ class _AddExpensePageState extends State<AddExpensePage> {
       );
       return;
     }
+=======
+>>>>>>> 871b46f34f1a7a0221a9e584e9289562bdeac8b0
     final amount = double.parse(rawAmount);
 
     final user = FirebaseAuth.instance.currentUser;
@@ -212,6 +225,7 @@ class _AddExpensePageState extends State<AddExpensePage> {
     setState(() => _saving = true);
     final userRef = FirebaseDatabase.instance.ref('users/${user.uid}');
 
+<<<<<<< HEAD
     final userSnap = await userRef.get();
     if (totalIncomeFromUserData(userSnap.value) <= 0) {
       if (!mounted) return;
@@ -221,6 +235,15 @@ class _AddExpensePageState extends State<AddExpensePage> {
           content: Text('Please add income first'),
           backgroundColor: Colors.red,
         ),
+=======
+    final netSnap = await userRef.child('account/netWorth').get();
+    final netWorth = netSnap.value is num ? (netSnap.value as num).toDouble() : 0.0;
+    if (netWorth <= 0 || netWorth < amount) {
+      if (!mounted) return;
+      setState(() => _saving = false);
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Not enough balance'), backgroundColor: Colors.red),
+>>>>>>> 871b46f34f1a7a0221a9e584e9289562bdeac8b0
       );
       return;
     }
@@ -228,16 +251,25 @@ class _AddExpensePageState extends State<AddExpensePage> {
     final budgetRef = userRef.child('budgets/$_category');
     final budgetSnap = await budgetRef.get();
     double? remainingBudget;
+<<<<<<< HEAD
     double? originalBudget;
     if (budgetSnap.exists && budgetSnap.value is num) {
       final currentBudget = (budgetSnap.value as num).toDouble();
       originalBudget = currentBudget;
+=======
+    if (budgetSnap.exists && budgetSnap.value is num) {
+      final currentBudget = (budgetSnap.value as num).toDouble();
+>>>>>>> 871b46f34f1a7a0221a9e584e9289562bdeac8b0
       if (currentBudget <= 0) {
         if (!mounted) return;
         setState(() => _saving = false);
         ScaffoldMessenger.of(context).showSnackBar(
+<<<<<<< HEAD
           const SnackBar(
               content: Text('Budget ended'), backgroundColor: Colors.red),
+=======
+          const SnackBar(content: Text('Please set a budget first'), backgroundColor: Colors.red),
+>>>>>>> 871b46f34f1a7a0221a9e584e9289562bdeac8b0
         );
         return;
       }
@@ -245,6 +277,7 @@ class _AddExpensePageState extends State<AddExpensePage> {
         if (!mounted) return;
         setState(() => _saving = false);
         ScaffoldMessenger.of(context).showSnackBar(
+<<<<<<< HEAD
           const SnackBar(
               content: Text('Not enough budget for this category'),
               backgroundColor: Colors.red),
@@ -252,14 +285,25 @@ class _AddExpensePageState extends State<AddExpensePage> {
         return;
       }
       remainingBudget = calculateRemainingBudget(currentBudget, amount);
+=======
+          const SnackBar(content: Text('Not enough budget for this category'), backgroundColor: Colors.red),
+        );
+        return;
+      }
+      remainingBudget = currentBudget - amount;
+>>>>>>> 871b46f34f1a7a0221a9e584e9289562bdeac8b0
       await budgetRef.set(remainingBudget);
     } else {
       if (!mounted) return;
       setState(() => _saving = false);
       ScaffoldMessenger.of(context).showSnackBar(
+<<<<<<< HEAD
         const SnackBar(
             content: Text('Please set a budget first'),
             backgroundColor: Colors.red),
+=======
+        const SnackBar(content: Text('Please set a budget first'), backgroundColor: Colors.red),
+>>>>>>> 871b46f34f1a7a0221a9e584e9289562bdeac8b0
       );
       return;
     }
@@ -282,10 +326,14 @@ class _AddExpensePageState extends State<AddExpensePage> {
           title: 'Budget Ended',
           body: '$_category budget has ended.',
         );
+<<<<<<< HEAD
       } else if (shouldShowBudgetCloseReminder(
         originalBudget: originalBudget,
         remainingBudget: remainingBudget,
       )) {
+=======
+      } else if (remainingBudget <= 1) {
+>>>>>>> 871b46f34f1a7a0221a9e584e9289562bdeac8b0
         await NotificationHelper.showNotification(
           title: 'Budget Alert',
           body: '$_category spending is close to the limit.',
@@ -317,6 +365,7 @@ class _AddExpensePageState extends State<AddExpensePage> {
             autovalidateMode: AutovalidateMode.onUserInteraction,
             child: Column(
               children: [
+<<<<<<< HEAD
                 Align(
                   alignment: Alignment.centerLeft,
                   child: IconButton(
@@ -441,6 +490,129 @@ class _AddExpensePageState extends State<AddExpensePage> {
                     ),
                   ),
                 ),
+=======
+              Align(
+                alignment: Alignment.centerLeft,
+                child: IconButton(
+                  icon: Icon(Icons.arrow_back, color: palette.primary),
+                  onPressed: () => Navigator.pop(context),
+                ),
+              ),
+              const SizedBox(height: 10),
+              Image.asset(
+                'images/logo2.png',
+                width: 120,
+                height: 120,
+                fit: BoxFit.contain,
+              ),
+              const SizedBox(height: 8),
+              Text(
+                _showBudgetForm
+                    ? (widget.editBudget ? 'Update Expense' : 'Add Expense')
+                    : _category,
+                style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: palette.primary),
+              ),
+              const SizedBox(height: 30),
+              if (_showBudgetForm) ...[
+                if (_showCategoryPicker) ...[
+                  _buildDropdown(
+                    palette: palette,
+                    icon: Icons.account_balance_wallet,
+                    value: _category,
+                    items: const ['Food', 'Shopping', 'Others'],
+                    onChanged: (value) {
+                      final selected = value ?? _category;
+                      final previous = _category;
+                      setState(() => _category = selected);
+                      if (selected != 'Others') {
+                        _categoryNameController.text = selected;
+                      } else if (previous != 'Others') {
+                        _categoryNameController.clear();
+                      }
+                    },
+                  ),
+                  const SizedBox(height: 14),
+                ] else ...[
+                  _buildTextField(
+                    palette: palette,
+                    icon: Icons.account_balance_wallet,
+                    hint: 'Category',
+                    controller: _categoryNameController,
+                    keyboardType: TextInputType.text,
+                    readOnly: true,
+                  ),
+                  const SizedBox(height: 14),
+                ],
+                if (_category == 'Others' && _showCategoryPicker) ...[
+                  _buildTextField(
+                    palette: palette,
+                    icon: Icons.edit_note,
+                    hint: 'Enter Category Name',
+                    controller: _categoryNameController,
+                    keyboardType: TextInputType.text,
+                    textCapitalization: TextCapitalization.words,
+                    inputFormatters: [
+                      FilteringTextInputFormatter.allow(RegExp(r'[A-Za-z\s]')),
+                    ],
+                    validator: (v) => _validateCategoryName(v?.trim() ?? ''),
+                  ),
+                  const SizedBox(height: 14),
+                ],
+                _buildTextField(
+                  palette: palette,
+                  hint: 'Enter Budget Amount',
+                  controller: _budgetController,
+                  useCurrencyPrefix: true,
+                  inputFormatters: [
+                    FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d{0,3}')),
+                  ],
+                    validator: (v) {
+                      final value = v?.trim() ?? '';
+                      if (value.isEmpty || double.tryParse(value) == null || double.parse(value) <= 0) {
+                        return 'Please enter valid data'; // ✅ matches test
+                      }
+                      return null;
+                    },
+                ),
+              ] else ...[
+                _buildTextField(
+                  palette: palette,
+                  hint: 'Enter Amount',
+                  controller: _amountController,
+                  useCurrencyPrefix: true,
+                  inputFormatters: [
+                    FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d{0,3}')),
+                  ],
+                  validator: (v) => _validateAmount(v?.trim() ?? ''),
+                ),
+                const SizedBox(height: 14),
+                _buildDateField(
+                  palette: palette,
+                  icon: Icons.event,
+                  hint: 'Enter Date',
+                  controller: _dateController,
+                  validator: (v) => _selectedDate == null ? 'Please select a date' : null,
+                ),
+              ],
+              const SizedBox(height: 20),
+              SizedBox(
+                width: 180,
+                height: 40,
+                child: ElevatedButton(
+                  onPressed: _saving ? null : _saveExpense,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: palette.buttonFill,
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                  ),
+                  child: Text(
+                    _saving
+                        ? 'Saving...'
+                        : (widget.editBudget ? 'Update' : 'Add'),
+                    style: TextStyle(color: palette.primary, fontWeight: FontWeight.bold),
+                  ),
+                ),
+              ),
+>>>>>>> 871b46f34f1a7a0221a9e584e9289562bdeac8b0
               ],
             ),
           ),
@@ -486,8 +658,12 @@ class _AddExpensePageState extends State<AddExpensePage> {
     IconData? icon,
     required String hint,
     required TextEditingController controller,
+<<<<<<< HEAD
     TextInputType keyboardType =
         const TextInputType.numberWithOptions(decimal: true),
+=======
+    TextInputType keyboardType = const TextInputType.numberWithOptions(decimal: true),
+>>>>>>> 871b46f34f1a7a0221a9e584e9289562bdeac8b0
     bool readOnly = false,
     bool useCurrencyPrefix = false,
     TextCapitalization textCapitalization = TextCapitalization.none,
@@ -548,6 +724,7 @@ class _AddExpensePageState extends State<AddExpensePage> {
       validator: validator,
       onTap: () async {
         final now = DateTime.now();
+<<<<<<< HEAD
         final today = DateTime(now.year, now.month, now.day);
         final picked = await showDatePicker(
           context: context,
@@ -566,6 +743,15 @@ class _AddExpensePageState extends State<AddExpensePage> {
             );
             return;
           }
+=======
+        final picked = await showDatePicker(
+          context: context,
+          initialDate: _selectedDate ?? now,
+          firstDate: DateTime(now.year - 5),
+          lastDate: now,
+        );
+        if (picked != null) {
+>>>>>>> 871b46f34f1a7a0221a9e584e9289562bdeac8b0
           setState(() => _selectedDate = picked);
           controller.text = '${picked.day}/${picked.month}/${picked.year}';
         }
@@ -588,3 +774,7 @@ class _AddExpensePageState extends State<AddExpensePage> {
     );
   }
 }
+<<<<<<< HEAD
+=======
+
+>>>>>>> 871b46f34f1a7a0221a9e584e9289562bdeac8b0

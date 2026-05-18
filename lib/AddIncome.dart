@@ -2,7 +2,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+<<<<<<< HEAD
 import 'Account.dart';
+=======
+>>>>>>> 871b46f34f1a7a0221a9e584e9289562bdeac8b0
 import 'app_palette.dart';
 
 class AddIncomePage extends StatefulWidget {
@@ -25,8 +28,12 @@ class _AddIncomePageState extends State<AddIncomePage> {
 
   static const List<String> _defaultSources = ['Salary', 'Allowance'];
 
+<<<<<<< HEAD
   bool get _isEdit =>
       widget.initialSource != null && widget.initialAmount != null;
+=======
+  bool get _isEdit => widget.initialSource != null && widget.initialAmount != null;
+>>>>>>> 871b46f34f1a7a0221a9e584e9289562bdeac8b0
 
   @override
   void initState() {
@@ -51,7 +58,13 @@ class _AddIncomePageState extends State<AddIncomePage> {
   }
 
   String _effectiveSource() {
+<<<<<<< HEAD
     return _source == 'Others' ? _sourceNameController.text.trim() : _source;
+=======
+    return _source == 'Others'
+        ? _sourceNameController.text.trim()
+        : _source;
+>>>>>>> 871b46f34f1a7a0221a9e584e9289562bdeac8b0
   }
 
   String? _validateAmount(String raw) {
@@ -78,8 +91,12 @@ class _AddIncomePageState extends State<AddIncomePage> {
     }
 
     final source = _effectiveSource();
+<<<<<<< HEAD
     final sourceError =
         _source == 'Others' ? _validateSourceName(source) : null;
+=======
+    final sourceError = _source == 'Others' ? _validateSourceName(source) : null;
+>>>>>>> 871b46f34f1a7a0221a9e584e9289562bdeac8b0
     if (sourceError != null) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text(sourceError), backgroundColor: Colors.red),
@@ -120,8 +137,11 @@ class _AddIncomePageState extends State<AddIncomePage> {
       });
     }
 
+<<<<<<< HEAD
     await reconcileNetWorth(userRef);
 
+=======
+>>>>>>> 871b46f34f1a7a0221a9e584e9289562bdeac8b0
     if (!mounted) return;
     setState(() => _saving = false);
     Navigator.pop(context);
@@ -164,12 +184,18 @@ class _AddIncomePageState extends State<AddIncomePage> {
       final netRef = userRef.child('account/netWorth');
       await netRef.runTransaction((current) {
         final currentValue = (current is num) ? current.toDouble() : 0.0;
+<<<<<<< HEAD
         final updatedValue = currentValue + delta;
         return Transaction.success(updatedValue < 0 ? 0.0 : updatedValue);
       });
     }
 
     await reconcileNetWorth(userRef);
+=======
+        return Transaction.success(currentValue + delta);
+      });
+    }
+>>>>>>> 871b46f34f1a7a0221a9e584e9289562bdeac8b0
   }
 
   @override
@@ -191,6 +217,7 @@ class _AddIncomePageState extends State<AddIncomePage> {
             autovalidateMode: AutovalidateMode.onUserInteraction,
             child: Column(
               children: [
+<<<<<<< HEAD
                 Align(
                   alignment: Alignment.centerLeft,
                   child: IconButton(
@@ -272,6 +299,83 @@ class _AddIncomePageState extends State<AddIncomePage> {
                     ),
                   ),
                 ),
+=======
+              Align(
+                alignment: Alignment.centerLeft,
+                child: IconButton(
+                  icon: Icon(Icons.arrow_back, color: palette.primary),
+                  onPressed: () => Navigator.pop(context),
+                ),
+              ),
+              const SizedBox(height: 10),
+              Image.asset(
+                'images/logo2.png',
+                width: 120,
+                height: 120,
+                fit: BoxFit.contain,
+              ),
+              const SizedBox(height: 8),
+              Text(
+                _isEdit ? 'Update Income' : 'Add Income',
+                style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: palette.primary),
+              ),
+              const SizedBox(height: 30),
+              _buildDropdown(
+                palette: palette,
+                icon: Icons.work_outline,
+                value: _source,
+                items: const ['Salary', 'Allowance', 'Others'],
+                onChanged: (value) {
+                  final next = value ?? _source;
+                  setState(() => _source = next);
+                  if (next != 'Others') {
+                    _sourceNameController.clear();
+                  }
+                },
+              ),
+              const SizedBox(height: 14),
+              if (_source == 'Others') ...[
+                _buildTextField(
+                  palette: palette,
+                  hint: 'Enter Source Name',
+                  controller: _sourceNameController,
+                  keyboardType: TextInputType.text,
+                  readOnly: false,
+                  textCapitalization: TextCapitalization.words,
+                  inputFormatters: [
+                    FilteringTextInputFormatter.allow(RegExp(r'[A-Za-z\s]')),
+                  ],
+                  validator: (v) => _validateSourceName(v?.trim() ?? ''),
+                ),
+                const SizedBox(height: 14),
+              ],
+              _buildTextField(
+                palette: palette,
+                hint: 'Enter Amount',
+                controller: _amountController,
+                useCurrencyPrefix: true,
+                inputFormatters: [
+                  FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d{0,3}')),
+                ],
+                validator: (v) => _validateAmount(v?.trim() ?? ''),
+              ),
+              const SizedBox(height: 20),
+              SizedBox(
+                width: 180,
+                height: 40,
+                child: ElevatedButton(
+                  onPressed: _saving ? null : _saveIncome,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: palette.buttonFill,
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                  ),
+                  child: Text(
+                    _saving ? 'Saving...' : (_isEdit ? 'Update' : 'Add'),
+                    style: TextStyle(color: palette.primary, fontWeight: FontWeight.bold),
+                  ),
+                ),
+              ),
+>>>>>>> 871b46f34f1a7a0221a9e584e9289562bdeac8b0
               ],
             ),
           ),
@@ -284,8 +388,12 @@ class _AddIncomePageState extends State<AddIncomePage> {
     required AppPalette palette,
     required String hint,
     required TextEditingController controller,
+<<<<<<< HEAD
     TextInputType keyboardType =
         const TextInputType.numberWithOptions(decimal: true),
+=======
+    TextInputType keyboardType = const TextInputType.numberWithOptions(decimal: true),
+>>>>>>> 871b46f34f1a7a0221a9e584e9289562bdeac8b0
     bool useCurrencyPrefix = false,
     bool readOnly = false,
     TextCapitalization textCapitalization = TextCapitalization.none,
@@ -364,3 +472,9 @@ class _AddIncomePageState extends State<AddIncomePage> {
     );
   }
 }
+<<<<<<< HEAD
+=======
+
+
+
+>>>>>>> 871b46f34f1a7a0221a9e584e9289562bdeac8b0

@@ -2,6 +2,7 @@ C/C++ Structured Log|
 z
 xC:\Users\alsha\StudioProjects\course_project_group16\android\app\.cxx\Debug\1pg704e4\x86_64\additional_project_files.txtC
 A
+<<<<<<< HEAD
 ?com.android.build.gradle.internal.cxx.io.EncodedFileFingerPrint	Ð½°åã3 Ûµü¸ã3y
 w
 uC:\Users\alsha\StudioProjects\course_project_group16\android\app\.cxx\Debug\1pg704e4\x86_64\android_gradle_build.json	Ð½°åã3Î áµü¸ã3~
@@ -26,3 +27,29 @@ u
 sC:\Users\alsha\StudioProjects\course_project_group16\android\app\.cxx\Debug\1pg704e4\x86_64\symbol_folder_index.txt	Ð½°åã3j òµü¸ã3K
 I
 GC:\flutter\packages\flutter_tools\gradle\src\main\groovy\CMakeLists.txt	Ð½°åã3§ šÑü‘É3
+=======
+?com.android.build.gradle.internal.cxx.io.EncodedFileFingerPrint	˜ÓÛÒØ3 ™ÐÊÐ3y
+w
+uC:\Users\alsha\StudioProjects\course_project_group16\android\app\.cxx\Debug\1pg704e4\x86_64\android_gradle_build.json	˜ÓÛÒØ3Î ›ÐÊÐ3~
+|
+zC:\Users\alsha\StudioProjects\course_project_group16\android\app\.cxx\Debug\1pg704e4\x86_64\android_gradle_build_mini.json	˜ÓÛÒØ3© ÐÊÐ3k
+i
+gC:\Users\alsha\StudioProjects\course_project_group16\android\app\.cxx\Debug\1pg704e4\x86_64\build.ninja	˜ÓÛÒØ3ßÔ ôÎÊÐ3o
+m
+kC:\Users\alsha\StudioProjects\course_project_group16\android\app\.cxx\Debug\1pg704e4\x86_64\build.ninja.txt	˜ÓÛÒØ3t
+r
+pC:\Users\alsha\StudioProjects\course_project_group16\android\app\.cxx\Debug\1pg704e4\x86_64\build_file_index.txt	˜ÓÛÒØ3G ŸÐÊÐ3u
+s
+qC:\Users\alsha\StudioProjects\course_project_group16\android\app\.cxx\Debug\1pg704e4\x86_64\compile_commands.json	˜ÓÛÒØ3y
+w
+uC:\Users\alsha\StudioProjects\course_project_group16\android\app\.cxx\Debug\1pg704e4\x86_64\compile_commands.json.bin	˜ÓÛÒØ3	
+}
+{C:\Users\alsha\StudioProjects\course_project_group16\android\app\.cxx\Debug\1pg704e4\x86_64\metadata_generation_command.txt	˜ÓÛÒØ3
+ì žÐÊÐ3r
+p
+nC:\Users\alsha\StudioProjects\course_project_group16\android\app\.cxx\Debug\1pg704e4\x86_64\prefab_config.json	˜ÓÛÒØ3( žÐÊÐ3w
+u
+sC:\Users\alsha\StudioProjects\course_project_group16\android\app\.cxx\Debug\1pg704e4\x86_64\symbol_folder_index.txt	˜ÓÛÒØ3j ŸÐÊÐ3K
+I
+GC:\flutter\packages\flutter_tools\gradle\src\main\groovy\CMakeLists.txt	˜ÓÛÒØ3§ šÑü‘É3
+>>>>>>> 871b46f34f1a7a0221a9e584e9289562bdeac8b0

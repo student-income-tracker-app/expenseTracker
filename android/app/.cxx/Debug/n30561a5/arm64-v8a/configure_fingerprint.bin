@@ -2,6 +2,7 @@ C/C++ Structured Logï
 í
 èC:\Users\HP\StudioProjects\course_project_group16\course_project_group16\android\app\.cxx\Debug\n30561a5\arm64-v8a\additional_project_files.txtC
 A
+<<<<<<< HEAD
 ?com.android.build.gradle.internal.cxx.io.EncodedFileFingerPrint	àÆÁÀ„3 óÀèÍ∆3í
 è
 åC:\Users\HP\StudioProjects\course_project_group16\course_project_group16\android\app\.cxx\Debug\n30561a5\arm64-v8a\android_gradle_build.json	àÆÁÀ„3Ú ∆ÀèÍ∆3ó
@@ -26,3 +27,29 @@ A
 äC:\Users\HP\StudioProjects\course_project_group16\course_project_group16\android\app\.cxx\Debug\n30561a5\arm64-v8a\symbol_folder_index.txt	àÆÁÀ„3Å ñÃèÍ∆3K
 I
 GC:\flutter\packages\flutter_tools\gradle\src\main\groovy\CMakeLists.txt	àÆÁÀ„3ß ı†‹⁄œ2
+=======
+?com.android.build.gradle.internal.cxx.io.EncodedFileFingerPrint	„áóë–3 óÀèÍ∆3í
+è
+åC:\Users\HP\StudioProjects\course_project_group16\course_project_group16\android\app\.cxx\Debug\n30561a5\arm64-v8a\android_gradle_build.json	„áóë–3Ú ∆ÀèÍ∆3ó
+î
+ëC:\Users\HP\StudioProjects\course_project_group16\course_project_group16\android\app\.cxx\Debug\n30561a5\arm64-v8a\android_gradle_build_mini.json	„áóë–3” ˚ÀèÍ∆3É
+Ä
+~C:\Users\HP\StudioProjects\course_project_group16\course_project_group16\android\app\.cxx\Debug\n30561a5\arm64-v8a\build.ninja	„áóë–3Ó– Ú»èÍ∆3à
+Ö
+ÇC:\Users\HP\StudioProjects\course_project_group16\course_project_group16\android\app\.cxx\Debug\n30561a5\arm64-v8a\build.ninja.txt	„áóë–3ç
+ä
+áC:\Users\HP\StudioProjects\course_project_group16\course_project_group16\android\app\.cxx\Debug\n30561a5\arm64-v8a\build_file_index.txt	„áóë–3G ôÃèÍ∆3é
+ã
+àC:\Users\HP\StudioProjects\course_project_group16\course_project_group16\android\app\.cxx\Debug\n30561a5\arm64-v8a\compile_commands.json	„áóë–3í
+è
+åC:\Users\HP\StudioProjects\course_project_group16\course_project_group16\android\app\.cxx\Debug\n30561a5\arm64-v8a\compile_commands.json.bin	„áóë–3	ò
+ï
+íC:\Users\HP\StudioProjects\course_project_group16\course_project_group16\android\app\.cxx\Debug\n30561a5\arm64-v8a\metadata_generation_command.txt	„áóë–3
+´	 çÃèÍ∆3ã
+à
+ÖC:\Users\HP\StudioProjects\course_project_group16\course_project_group16\android\app\.cxx\Debug\n30561a5\arm64-v8a\prefab_config.json	„áóë–3( èÃèÍ∆3ê
+ç
+äC:\Users\HP\StudioProjects\course_project_group16\course_project_group16\android\app\.cxx\Debug\n30561a5\arm64-v8a\symbol_folder_index.txt	„áóë–3Å ñÃèÍ∆3K
+I
+GC:\flutter\packages\flutter_tools\gradle\src\main\groovy\CMakeLists.txt	„áóë–3ß ı†‹⁄œ2
+>>>>>>> 871b46f34f1a7a0221a9e584e9289562bdeac8b0

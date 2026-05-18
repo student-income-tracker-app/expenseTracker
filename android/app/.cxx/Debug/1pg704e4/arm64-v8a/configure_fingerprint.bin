@@ -2,6 +2,7 @@ C/C++ Structured Log
 }
 {C:\Users\alsha\StudioProjects\course_project_group16\android\app\.cxx\Debug\1pg704e4\arm64-v8a\additional_project_files.txtC
 A
+<<<<<<< HEAD
 ?com.android.build.gradle.internal.cxx.io.EncodedFileFingerPrint	¥¼°åã3 ˜Îû¸ã3|
 z
 xC:\Users\alsha\StudioProjects\course_project_group16\android\app\.cxx\Debug\1pg704e4\arm64-v8a\android_gradle_build.json	¥¼°åã3Ô ³Îû¸ã3
@@ -26,3 +27,29 @@ x
 vC:\Users\alsha\StudioProjects\course_project_group16\android\app\.cxx\Debug\1pg704e4\arm64-v8a\symbol_folder_index.txt	¥¼°åã3m ùÎû¸ã3K
 I
 GC:\flutter\packages\flutter_tools\gradle\src\main\groovy\CMakeLists.txt	¥¼°åã3§ šÑü‘É3
+=======
+?com.android.build.gradle.internal.cxx.io.EncodedFileFingerPrint	ÈÒÛÒØ3 ï¼ÉÐ3|
+z
+xC:\Users\alsha\StudioProjects\course_project_group16\android\app\.cxx\Debug\1pg704e4\arm64-v8a\android_gradle_build.json	ÈÒÛÒØ3Ô ˆ½ÉÐ3
+
+}C:\Users\alsha\StudioProjects\course_project_group16\android\app\.cxx\Debug\1pg704e4\arm64-v8a\android_gradle_build_mini.json	ÈÒÛÒØ3¯ ®½ÉÐ3n
+l
+jC:\Users\alsha\StudioProjects\course_project_group16\android\app\.cxx\Debug\1pg704e4\arm64-v8a\build.ninja	ÈÒÛÒØ3îÔ ž¸ÉÐ3r
+p
+nC:\Users\alsha\StudioProjects\course_project_group16\android\app\.cxx\Debug\1pg704e4\arm64-v8a\build.ninja.txt	ÈÒÛÒØ3w
+u
+sC:\Users\alsha\StudioProjects\course_project_group16\android\app\.cxx\Debug\1pg704e4\arm64-v8a\build_file_index.txt	ÈÒÛÒØ3G Ã½ÉÐ3x
+v
+tC:\Users\alsha\StudioProjects\course_project_group16\android\app\.cxx\Debug\1pg704e4\arm64-v8a\compile_commands.json	ÈÒÛÒØ3|
+z
+xC:\Users\alsha\StudioProjects\course_project_group16\android\app\.cxx\Debug\1pg704e4\arm64-v8a\compile_commands.json.bin	ÈÒÛÒØ3	ƒ
+€
+~C:\Users\alsha\StudioProjects\course_project_group16\android\app\.cxx\Debug\1pg704e4\arm64-v8a\metadata_generation_command.txt	ÈÒÛÒØ3
+û º½ÉÐ3u
+s
+qC:\Users\alsha\StudioProjects\course_project_group16\android\app\.cxx\Debug\1pg704e4\arm64-v8a\prefab_config.json	ÈÒÛÒØ3( ¼½ÉÐ3z
+x
+vC:\Users\alsha\StudioProjects\course_project_group16\android\app\.cxx\Debug\1pg704e4\arm64-v8a\symbol_folder_index.txt	ÈÒÛÒØ3m À½ÉÐ3K
+I
+GC:\flutter\packages\flutter_tools\gradle\src\main\groovy\CMakeLists.txt	ÈÒÛÒØ3§ šÑü‘É3
+>>>>>>> 871b46f34f1a7a0221a9e584e9289562bdeac8b0

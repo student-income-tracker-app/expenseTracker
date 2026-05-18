@@ -11,9 +11,13 @@ class ChartsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final palette = AppPalette.of(context);
     final user = FirebaseAuth.instance.currentUser;
+<<<<<<< HEAD
     final userRef = user == null
         ? null
         : FirebaseDatabase.instance.ref('users/${user.uid}');
+=======
+    final userRef = user == null ? null : FirebaseDatabase.instance.ref('users/${user.uid}');
+>>>>>>> 871b46f34f1a7a0221a9e584e9289562bdeac8b0
     return LayoutBuilder(
       builder: (context, constraints) {
         return SingleChildScrollView(
@@ -22,8 +26,12 @@ class ChartsPage extends StatelessWidget {
             child: IntrinsicHeight(
               child: Center(
                 child: Padding(
+<<<<<<< HEAD
                   padding:
                       const EdgeInsets.symmetric(horizontal: 20, vertical: 24),
+=======
+                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 24),
+>>>>>>> 871b46f34f1a7a0221a9e584e9289562bdeac8b0
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -37,16 +45,21 @@ class ChartsPage extends StatelessWidget {
                       const SizedBox(height: 8),
                       Text(
                         'Summary',
+<<<<<<< HEAD
                         style: TextStyle(
                             fontSize: 22,
                             fontWeight: FontWeight.bold,
                             color: palette.primary),
+=======
+                        style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: palette.primary),
+>>>>>>> 871b46f34f1a7a0221a9e584e9289562bdeac8b0
                       ),
                       const SizedBox(height: 18),
                       StreamBuilder<DatabaseEvent>(
                         stream: userRef?.onValue,
                         builder: (context, snapshot) {
                           final totals = <String, double>{};
+<<<<<<< HEAD
                           final activeCategories = <String>{};
                           final now = DateTime.now();
                           final currentMonthStart =
@@ -91,10 +104,25 @@ class ChartsPage extends StatelessWidget {
                                           (totals[category] ?? 0) +
                                               expenseValue;
                                     }
+=======
+                          final value = snapshot.data?.snapshot.value;
+                          if (value is Map) {
+                            final map = Map<String, dynamic>.from(value);
+                            if (map['expenses'] is Map) {
+                              final expenseMap = Map<String, dynamic>.from(map['expenses']);
+                              for (final entry in expenseMap.values) {
+                                if (entry is Map) {
+                                  final e = Map<String, dynamic>.from(entry);
+                                  final category = (e['category'] ?? '').toString();
+                                  final amount = e['amount'];
+                                  if (amount is num) {
+                                    totals[category] = (totals[category] ?? 0) + amount.toDouble();
+>>>>>>> 871b46f34f1a7a0221a9e584e9289562bdeac8b0
                                   }
                                 }
                               }
                             }
+<<<<<<< HEAD
                           }
 
                           if (totals.isEmpty) {
@@ -136,14 +164,31 @@ class ChartsPage extends StatelessWidget {
                                 ),
                               ],
                             );
+=======
+                            if (map['budgets'] is Map) {
+                              final budgetMap = Map<String, dynamic>.from(map['budgets']);
+                              for (final entry in budgetMap.entries) {
+                                totals.putIfAbsent(entry.key.toString(), () => 0.0);
+                              }
+                            }
+                          }
+
+                          if (totals.isEmpty) {
+                            totals['Food'] = 0;
+                            totals['Shopping'] = 0;
+>>>>>>> 871b46f34f1a7a0221a9e584e9289562bdeac8b0
                           }
 
                           final topEntry = totals.entries.reduce(
                             (a, b) => a.value >= b.value ? a : b,
                           );
+<<<<<<< HEAD
                           final recommendation = _buildRecommendationMessage(
                             topEntry,
                           );
+=======
+                          final recommendation = _buildRecommendationMessage(topEntry);
+>>>>>>> 871b46f34f1a7a0221a9e584e9289562bdeac8b0
                           return Column(
                             children: [
                               _buildChart(palette, totals),
@@ -156,24 +201,34 @@ class ChartsPage extends StatelessWidget {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
+<<<<<<< HEAD
                                         builder: (_) => RecommendationPage(
                                           message: recommendation,
                                           predictionCategory: topEntry.value > 0
                                               ? topEntry.key
                                               : '',
                                         ),
+=======
+                                        builder: (_) => RecommendationPage(message: recommendation),
+>>>>>>> 871b46f34f1a7a0221a9e584e9289562bdeac8b0
                                       ),
                                     );
                                   },
                                   style: OutlinedButton.styleFrom(
                                     backgroundColor: palette.cardFill,
                                     side: BorderSide(color: palette.cardBorder),
+<<<<<<< HEAD
                                     shape: RoundedRectangleBorder(
                                         borderRadius:
                                             BorderRadius.circular(10)),
                                   ),
                                   child: Text('Recommendation',
                                       style: TextStyle(color: palette.primary)),
+=======
+                                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                                  ),
+                                  child: Text('Recommendation', style: TextStyle(color: palette.primary)),
+>>>>>>> 871b46f34f1a7a0221a9e584e9289562bdeac8b0
                                 ),
                               ),
                             ],
@@ -191,6 +246,7 @@ class ChartsPage extends StatelessWidget {
     );
   }
 
+<<<<<<< HEAD
   Widget _buildEmptyChart(AppPalette palette) {
     return Container(
       width: double.infinity,
@@ -211,6 +267,8 @@ class ChartsPage extends StatelessWidget {
     );
   }
 
+=======
+>>>>>>> 871b46f34f1a7a0221a9e584e9289562bdeac8b0
   Widget _buildChart(AppPalette palette, Map<String, double> totals) {
     final labels = totals.keys.toList()..sort();
     final values = labels.map((key) => totals[key] ?? 0).toList();
@@ -351,14 +409,25 @@ class ChartsPage extends StatelessWidget {
     );
   }
 
+<<<<<<< HEAD
   String _buildRecommendationMessage(
     MapEntry<String, double> topEntry,
   ) {
+=======
+  String _buildRecommendationMessage(MapEntry<String, double> topEntry) {
+>>>>>>> 871b46f34f1a7a0221a9e584e9289562bdeac8b0
     if (topEntry.value == 0) {
       return 'No spending data yet. Start tracking your expenses to get personalized tips.';
     }
     final category = topEntry.key.toLowerCase();
+<<<<<<< HEAD
     return 'Your $category spending is the highest this month. '
         'Try to set a clear limit and track every purchase to stay within your budget.';
   }
 }
+=======
+    return 'Your $category spending is the highest this month. Next month, try to reduce it by setting a clear limit and tracking every purchase to stay within your budget.';
+  }
+}
+
+>>>>>>> 871b46f34f1a7a0221a9e584e9289562bdeac8b0

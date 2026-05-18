@@ -6,9 +6,15 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
+<<<<<<< HEAD
 import 'package:url_launcher/url_launcher.dart';
 import 'app_palette.dart';
 
+=======
+import 'app_palette.dart';
+
+
+>>>>>>> 871b46f34f1a7a0221a9e584e9289562bdeac8b0
 class CurrentLocationPage extends StatefulWidget {
   const CurrentLocationPage({super.key});
 
@@ -25,8 +31,11 @@ class _CurrentLocationPageState extends State<CurrentLocationPage> {
   _ServiceType _selectedService = _ServiceType.food;
   bool _loadingPlaces = false;
   List<_NearbyPlace> _places = [];
+<<<<<<< HEAD
   final Map<_ServiceType, List<_NearbyPlace>> _placesCache = {};
   DateTime? _lastFetchAt;
+=======
+>>>>>>> 871b46f34f1a7a0221a9e584e9289562bdeac8b0
 
   @override
   void initState() {
@@ -129,8 +138,12 @@ class _CurrentLocationPageState extends State<CurrentLocationPage> {
   @override
   Widget build(BuildContext context) {
     final palette = AppPalette.of(context);
+<<<<<<< HEAD
     final visiblePlaces = _places.isEmpty ? _buildFallbackPlaces() : _places;
     final placeMarkers = visiblePlaces
+=======
+    final placeMarkers = _places
+>>>>>>> 871b46f34f1a7a0221a9e584e9289562bdeac8b0
         .map(
           (place) => Marker(
             point: LatLng(place.lat, place.lng),
@@ -197,6 +210,7 @@ class _CurrentLocationPageState extends State<CurrentLocationPage> {
               ),
               const SizedBox(height: 12),
               Expanded(
+<<<<<<< HEAD
                 child: Container(
                   width: double.infinity,
                   padding: const EdgeInsets.all(16),
@@ -303,6 +317,95 @@ class _CurrentLocationPageState extends State<CurrentLocationPage> {
                           ),
                         ),
                     ],
+=======
+                child: GestureDetector(
+                  onTap: _fetchLocation,
+                  child: Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.all(16),
+                    decoration: BoxDecoration(
+                      color: palette.cardFill,
+                      borderRadius: BorderRadius.circular(14),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Expanded(
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(12),
+                            child: FlutterMap(
+                              mapController: _mapController,
+                              options: MapOptions(
+                                initialCenter: _mapCenter,
+                                initialZoom: 15,
+                                interactionOptions: const InteractionOptions(
+                                  flags: InteractiveFlag.drag | InteractiveFlag.pinchZoom,
+                                ),
+                              ),
+                              children: [
+                                TileLayer(
+                                  urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+                                  userAgentPackageName: 'com.example.course_project_group16',
+                                ),
+                                MarkerLayer(
+                                  markers: [
+                                    Marker(
+                                      point: _mapCenter,
+                                      width: 44,
+                                      height: 44,
+                                      child: Icon(Icons.location_pin, color: palette.primary, size: 44),
+                                    ),
+                                    ...placeMarkers,
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 10),
+                        Text(
+                          _locationLabel,
+                          style: TextStyle(color: palette.primary, fontSize: 14, fontWeight: FontWeight.w600),
+                        ),
+                        if (_status.isNotEmpty) ...[
+                          const SizedBox(height: 6),
+                          Text(
+                            _status,
+                            style: TextStyle(color: palette.primary, fontSize: 12),
+                            textAlign: TextAlign.center,
+                          ),
+                        ],
+                        const SizedBox(height: 4),
+                        Text(
+                          _hasHome ? 'Tap to refresh current location' : 'Tap to set home location',
+                          style: TextStyle(color: palette.primary, fontSize: 11),
+                        ),
+                        const SizedBox(height: 8),
+                        if (_loadingPlaces)
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 6),
+                            child: CircularProgressIndicator(color: palette.primary),
+                          )
+                        else if (_places.isEmpty)
+                          Text(
+                            'No nearby places found.',
+                            style: TextStyle(color: palette.primary, fontSize: 12),
+                          )
+                        else
+                          SizedBox(
+                            height: 150,
+                            child: ListView.separated(
+                              itemCount: _places.length,
+                              separatorBuilder: (_, __) => const SizedBox(height: 6),
+                              itemBuilder: (context, index) {
+                                final place = _places[index];
+                                return _PlaceTile(place: place, palette: palette);
+                              },
+                            ),
+                          ),
+                      ],
+                    ),
+>>>>>>> 871b46f34f1a7a0221a9e584e9289562bdeac8b0
                   ),
                 ),
               ),
@@ -325,14 +428,19 @@ class _CurrentLocationPageState extends State<CurrentLocationPage> {
   }
 
   Future<void> _onServiceSelected(_ServiceType type) async {
+<<<<<<< HEAD
     setState(() {
       _selectedService = type;
       _places = _placesCache[type] ?? _buildFallbackPlaces();
     });
+=======
+    setState(() => _selectedService = type);
+>>>>>>> 871b46f34f1a7a0221a9e584e9289562bdeac8b0
     await _fetchPlaces();
   }
 
   Future<void> _fetchPlaces() async {
+<<<<<<< HEAD
     final now = DateTime.now();
     final hasFreshCache = _placesCache.containsKey(_selectedService) &&
         _lastFetchAt != null &&
@@ -361,10 +469,28 @@ class _CurrentLocationPageState extends State<CurrentLocationPage> {
         });
         return;
       }
+=======
+    setState(() => _loadingPlaces = true);
+    try {
+      final query = _buildOverpassQuery(_selectedService, _mapCenter.latitude, _mapCenter.longitude);
+      final url = Uri.parse(
+        'https://overpass-api.de/api/interpreter?data=${Uri.encodeQueryComponent(query)}',
+      );
+      final response = await http.get(url);
+      if (response.statusCode != 200) {
+        setState(() {
+          _places = [];
+          _loadingPlaces = false;
+        });
+        return;
+      }
+      final data = jsonDecode(response.body) as Map<String, dynamic>;
+>>>>>>> 871b46f34f1a7a0221a9e584e9289562bdeac8b0
       final elements = data['elements'] is List ? data['elements'] as List : [];
       final places = <_NearbyPlace>[];
       for (final element in elements) {
         if (element is Map) {
+<<<<<<< HEAD
           final point = _extractLatLng(element);
           if (point == null) continue;
           final tags = element['tags'] is Map ? element['tags'] as Map : {};
@@ -404,11 +530,45 @@ class _CurrentLocationPageState extends State<CurrentLocationPage> {
         _lastFetchAt = DateTime.now();
         _loadingPlaces = false;
         _status = 'Live places unavailable. Showing suggested nearby places.';
+=======
+          final lat = element['lat'];
+          final lng = element['lon'];
+          if (lat is num && lng is num) {
+            final tags = element['tags'] is Map ? element['tags'] as Map : {};
+            final name = (tags['name'] ?? tags['brand'] ?? 'Unnamed').toString();
+            final distance = Geolocator.distanceBetween(
+              _mapCenter.latitude,
+              _mapCenter.longitude,
+              lat.toDouble(),
+              lng.toDouble(),
+            );
+            places.add(
+              _NearbyPlace(
+                name: name,
+                lat: lat.toDouble(),
+                lng: lng.toDouble(),
+                distanceMeters: distance,
+              ),
+            );
+          }
+        }
+      }
+      places.sort((a, b) => a.distanceMeters.compareTo(b.distanceMeters));
+      setState(() {
+        _places = places.take(12).toList();
+        _loadingPlaces = false;
+      });
+    } catch (_) {
+      setState(() {
+        _places = [];
+        _loadingPlaces = false;
+>>>>>>> 871b46f34f1a7a0221a9e584e9289562bdeac8b0
       });
     }
   }
 
   String _buildOverpassQuery(_ServiceType type, double lat, double lng) {
+<<<<<<< HEAD
     const radius = 5000;
     switch (type) {
       case _ServiceType.food:
@@ -576,6 +736,16 @@ class _CurrentLocationPageState extends State<CurrentLocationPage> {
       setState(() {
         _status = 'Could not open maps app on this device.';
       });
+=======
+    const radius = 2000;
+    switch (type) {
+      case _ServiceType.food:
+        return '[out:json];(node["amenity"~"restaurant|cafe|fast_food"](around:$radius,$lat,$lng););out 20;';
+      case _ServiceType.transport:
+        return '[out:json];(node["amenity"~"bus_station|taxi|fuel"](around:$radius,$lat,$lng);node["public_transport"="station"](around:$radius,$lat,$lng););out 20;';
+      case _ServiceType.shopping:
+        return '[out:json];(node["shop"~"supermarket|mall|clothes|convenience"](around:$radius,$lat,$lng););out 20;';
+>>>>>>> 871b46f34f1a7a0221a9e584e9289562bdeac8b0
     }
   }
 
@@ -638,6 +808,7 @@ class _ServiceChip extends StatelessWidget {
 class _PlaceTile extends StatelessWidget {
   final _NearbyPlace place;
   final AppPalette palette;
+<<<<<<< HEAD
   final VoidCallback onOpenMap;
 
   const _PlaceTile({
@@ -645,6 +816,10 @@ class _PlaceTile extends StatelessWidget {
     required this.palette,
     required this.onOpenMap,
   });
+=======
+
+  const _PlaceTile({required this.place, required this.palette});
+>>>>>>> 871b46f34f1a7a0221a9e584e9289562bdeac8b0
 
   @override
   Widget build(BuildContext context) {
@@ -672,12 +847,15 @@ class _PlaceTile extends StatelessWidget {
             '${distanceKm.toStringAsFixed(1)} km',
             style: TextStyle(color: palette.primary.withOpacity(0.8), fontSize: 11),
           ),
+<<<<<<< HEAD
           const SizedBox(width: 6),
           IconButton(
             onPressed: onOpenMap,
             icon: Icon(Icons.open_in_new, color: palette.primary, size: 18),
             tooltip: 'Open in maps',
           ),
+=======
+>>>>>>> 871b46f34f1a7a0221a9e584e9289562bdeac8b0
         ],
       ),
     );

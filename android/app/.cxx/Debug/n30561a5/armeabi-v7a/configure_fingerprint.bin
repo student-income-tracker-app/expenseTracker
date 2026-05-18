@@ -2,6 +2,7 @@ C/C++ Structured Log—
 ”
 ‘C:\Users\HP\StudioProjects\course_project_group16\course_project_group16\android\app\.cxx\Debug\n30561a5\armeabi-v7a\additional_project_files.txtC
 A
+<<<<<<< HEAD
 ?com.android.build.gradle.internal.cxx.io.EncodedFileFingerPrint	ì®çËã3 ˆ€êÆ3”
 ‘
 ŽC:\Users\HP\StudioProjects\course_project_group16\course_project_group16\android\app\.cxx\Debug\n30561a5\armeabi-v7a\android_gradle_build.json	ì®çËã3ö Ž€êÆ3™
@@ -26,3 +27,29 @@ A
 ŒC:\Users\HP\StudioProjects\course_project_group16\course_project_group16\android\app\.cxx\Debug\n30561a5\armeabi-v7a\symbol_folder_index.txt	ì®çËã3ƒ ¤€êÆ3K
 I
 GC:\flutter\packages\flutter_tools\gradle\src\main\groovy\CMakeLists.txt	ì®çËã3§ õ ÜÚÏ2
+=======
+?com.android.build.gradle.internal.cxx.io.EncodedFileFingerPrint	ˆ‰—‘Ð3 ˆ€êÆ3”
+‘
+ŽC:\Users\HP\StudioProjects\course_project_group16\course_project_group16\android\app\.cxx\Debug\n30561a5\armeabi-v7a\android_gradle_build.json	ˆ‰—‘Ð3ö Ž€êÆ3™
+–
+“C:\Users\HP\StudioProjects\course_project_group16\course_project_group16\android\app\.cxx\Debug\n30561a5\armeabi-v7a\android_gradle_build_mini.json	ˆ‰—‘Ð3× €êÆ3†
+ƒ
+€C:\Users\HP\StudioProjects\course_project_group16\course_project_group16\android\app\.cxx\Debug\n30561a5\armeabi-v7a\build.ninja	ˆ‰—‘Ð3øÐ ¦þêÆ3Š
+‡
+„C:\Users\HP\StudioProjects\course_project_group16\course_project_group16\android\app\.cxx\Debug\n30561a5\armeabi-v7a\build.ninja.txt	ˆ‰—‘Ð3
+Œ
+‰C:\Users\HP\StudioProjects\course_project_group16\course_project_group16\android\app\.cxx\Debug\n30561a5\armeabi-v7a\build_file_index.txt	ˆ‰—‘Ð3G ª€êÆ3
+
+ŠC:\Users\HP\StudioProjects\course_project_group16\course_project_group16\android\app\.cxx\Debug\n30561a5\armeabi-v7a\compile_commands.json	ˆ‰—‘Ð3”
+‘
+ŽC:\Users\HP\StudioProjects\course_project_group16\course_project_group16\android\app\.cxx\Debug\n30561a5\armeabi-v7a\compile_commands.json.bin	ˆ‰—‘Ð3	š
+—
+”C:\Users\HP\StudioProjects\course_project_group16\course_project_group16\android\app\.cxx\Debug\n30561a5\armeabi-v7a\metadata_generation_command.txt	ˆ‰—‘Ð3
+µ	 Ÿ€êÆ3
+Š
+‡C:\Users\HP\StudioProjects\course_project_group16\course_project_group16\android\app\.cxx\Debug\n30561a5\armeabi-v7a\prefab_config.json	ˆ‰—‘Ð3( ¢€êÆ3’
+
+ŒC:\Users\HP\StudioProjects\course_project_group16\course_project_group16\android\app\.cxx\Debug\n30561a5\armeabi-v7a\symbol_folder_index.txt	ˆ‰—‘Ð3ƒ ¤€êÆ3K
+I
+GC:\flutter\packages\flutter_tools\gradle\src\main\groovy\CMakeLists.txt	ˆ‰—‘Ð3§ õ ÜÚÏ2
+>>>>>>> 871b46f34f1a7a0221a9e584e9289562bdeac8b0

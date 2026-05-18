@@ -4,6 +4,10 @@ import 'package:firebase_database/firebase_database.dart';
 import 'app_palette.dart';
 import 'DetailedStatement.dart';
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 871b46f34f1a7a0221a9e584e9289562bdeac8b0
 class ReportPage extends StatelessWidget {
   const ReportPage({super.key});
 

@@ -42,12 +42,20 @@ class WelcomePage extends StatelessWidget {
 
             const SizedBox(height: 18),
 
+<<<<<<< HEAD
             // ---------- SUBTEXT ----------
             const Padding(
               padding: EdgeInsets.symmetric(horizontal: 40),
               child: Text(
                 "You're amazing for taking this first step towards getting better "
                     "control over your money and financial goals.",
+=======
+            // ---------- SUBTEXT (UPDATED) ----------
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 40),
+              child: Text(
+                "Great job taking control of your finances! Every small step counts towards your financial freedom.",
+>>>>>>> 871b46f34f1a7a0221a9e584e9289562bdeac8b0
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 15,

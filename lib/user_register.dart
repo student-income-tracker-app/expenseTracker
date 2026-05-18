@@ -3,7 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter_firebase_app_2/Login.dart';
+<<<<<<< HEAD
 import 'package:crypt/crypt.dart'; // Import the crypt package for hashing
+=======
+import 'package:crypt/crypt.dart';  // Import the crypt package for hashing
+>>>>>>> 871b46f34f1a7a0221a9e584e9289562bdeac8b0
 
 class UserRegister extends StatefulWidget {
   const UserRegister({super.key});
@@ -12,8 +16,12 @@ class UserRegister extends StatefulWidget {
   _UserRegisterState createState() => _UserRegisterState();
 }
 
+<<<<<<< HEAD
 class _UserRegisterState extends State<UserRegister>
     with SingleTickerProviderStateMixin {
+=======
+class _UserRegisterState extends State<UserRegister> with SingleTickerProviderStateMixin {
+>>>>>>> 871b46f34f1a7a0221a9e584e9289562bdeac8b0
   final _formKey = GlobalKey<FormState>();
 
   final TextEditingController emailController = TextEditingController();
@@ -43,12 +51,19 @@ class _UserRegisterState extends State<UserRegister>
       setState(() => _isLoading = true);
       try {
         // Hash the password using crypt package
+<<<<<<< HEAD
         String hashedPassword =
             Crypt.sha256(passwordController.text.trim()).toString();
 
         // Create user in Firebase Authentication
         UserCredential userCredential =
             await FirebaseAuth.instance.createUserWithEmailAndPassword(
+=======
+        String hashedPassword = Crypt.sha256(passwordController.text.trim()).toString();
+
+        // Create user in Firebase Authentication
+        UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+>>>>>>> 871b46f34f1a7a0221a9e584e9289562bdeac8b0
           email: emailController.text.trim(),
           password: passwordController.text.trim(),
         );
@@ -65,7 +80,11 @@ class _UserRegisterState extends State<UserRegister>
           'age': ageController.text.trim(),
           'level': levelController.text.trim(),
           'dob': selectedDate != null ? selectedDate!.toIso8601String() : "",
+<<<<<<< HEAD
           'password': hashedPassword, // Storing the hashed password
+=======
+          'password': hashedPassword,  // Storing the hashed password
+>>>>>>> 871b46f34f1a7a0221a9e584e9289562bdeac8b0
         });
 
         /////change4
@@ -97,19 +116,30 @@ class _UserRegisterState extends State<UserRegister>
   }
 
   Future<void> _pickDateOfBirth() async {
+<<<<<<< HEAD
     final today = DateTime.now();
+=======
+>>>>>>> 871b46f34f1a7a0221a9e584e9289562bdeac8b0
     DateTime? picked = await showDatePicker(
       context: context,
       initialDate: DateTime(2000),
       firstDate: DateTime(1950),
+<<<<<<< HEAD
       lastDate: DateTime(today.year, today.month, today.day),
+=======
+      lastDate: DateTime.now(),
+>>>>>>> 871b46f34f1a7a0221a9e584e9289562bdeac8b0
     );
     if (picked != null) {
       selectedDate = picked;
       int age = DateTime.now().year - picked.year;
       if (DateTime.now().month < picked.month ||
+<<<<<<< HEAD
           (DateTime.now().month == picked.month &&
               DateTime.now().day < picked.day)) {
+=======
+          (DateTime.now().month == picked.month && DateTime.now().day < picked.day)) {
+>>>>>>> 871b46f34f1a7a0221a9e584e9289562bdeac8b0
         age--;
       }
       ageController.text = age.toString();
@@ -148,9 +178,13 @@ class _UserRegisterState extends State<UserRegister>
     }
 
     // Case-insensitive regex pattern to match "xxJxxxx@utas.edu.om" format
+<<<<<<< HEAD
     if (!RegExp(r'\b[0-9]{2,3}[JjSs][0-9]+@utas\.edu\.om\b',
             caseSensitive: false)
         .hasMatch(value)) {
+=======
+    if (!RegExp(r'\b[0-9]{2,3}[JjSs][0-9]+@utas\.edu\.om\b', caseSensitive: false).hasMatch(value)) {
+>>>>>>> 871b46f34f1a7a0221a9e584e9289562bdeac8b0
       return 'Please enter a valid email address in the format "xxJ/Sxxxx@utas.edu.om"';
     }
 
@@ -173,8 +207,12 @@ class _UserRegisterState extends State<UserRegister>
     if (!RegExp(r'[0-9]').hasMatch(value)) {
       return 'Password must include a number';
     }
+<<<<<<< HEAD
     if (!RegExp(r"[!@#\$%\^&\*\(\)_\+\-=\[\]\{\};:',.<>\/\?\\|`~]")
         .hasMatch(value)) {
+=======
+    if (!RegExp(r"[!@#\$%\^&\*\(\)_\+\-=\[\]\{\};:',.<>\/\?\\|`~]").hasMatch(value)) {
+>>>>>>> 871b46f34f1a7a0221a9e584e9289562bdeac8b0
       return 'Password must include a special character';
     }
     return null;
@@ -275,6 +313,7 @@ class _UserRegisterState extends State<UserRegister>
                       ),
                       hint: const Text("Current Level of Study"),
                       items: const [
+<<<<<<< HEAD
                         DropdownMenuItem(
                             value: "Foundation", child: Text("Foundation")),
                         DropdownMenuItem(
@@ -285,6 +324,12 @@ class _UserRegisterState extends State<UserRegister>
                         DropdownMenuItem(
                             value: "Bachelor's Degree",
                             child: Text("Bachelor's Degree")),
+=======
+                        DropdownMenuItem(value: "Foundation", child: Text("Foundation")),
+                        DropdownMenuItem(value: "Diploma", child: Text("Diploma")),
+                        DropdownMenuItem(value: "Higher Diploma", child: Text("Higher Diploma")),
+                        DropdownMenuItem(value: "Bachelor's Degree", child: Text("Bachelor's Degree")),
+>>>>>>> 871b46f34f1a7a0221a9e584e9289562bdeac8b0
                       ],
                       onChanged: (value) {
                         setState(() {
@@ -292,9 +337,14 @@ class _UserRegisterState extends State<UserRegister>
                           levelController.text = value ?? "";
                         });
                       },
+<<<<<<< HEAD
                       validator: (value) => value == null || value.isEmpty
                           ? "Please select your level"
                           : null,
+=======
+                      validator: (value) =>
+                      value == null || value.isEmpty ? "Please select your level" : null,
+>>>>>>> 871b46f34f1a7a0221a9e584e9289562bdeac8b0
                     ),
                   ),
 
@@ -324,6 +374,7 @@ class _UserRegisterState extends State<UserRegister>
                     obscureText: _obscurePassword,
                     suffixIcon: IconButton(
                       icon: Icon(
+<<<<<<< HEAD
                         _obscurePassword
                             ? Icons.visibility_off
                             : Icons.visibility,
@@ -331,6 +382,12 @@ class _UserRegisterState extends State<UserRegister>
                       ),
                       onPressed: () =>
                           setState(() => _obscurePassword = !_obscurePassword),
+=======
+                        _obscurePassword ? Icons.visibility_off : Icons.visibility,
+                        color: accentBlue,
+                      ),
+                      onPressed: () => setState(() => _obscurePassword = !_obscurePassword),
+>>>>>>> 871b46f34f1a7a0221a9e584e9289562bdeac8b0
                     ),
                     validator: passwordValidator,
                   ),
@@ -367,6 +424,7 @@ class _UserRegisterState extends State<UserRegister>
                           ),
                         ),
                         child: _isLoading
+<<<<<<< HEAD
                             ? const CircularProgressIndicator(
                                 color: Colors.white)
                             : const Text(
@@ -377,6 +435,17 @@ class _UserRegisterState extends State<UserRegister>
                                   color: Colors.white,
                                 ),
                               ),
+=======
+                            ? const CircularProgressIndicator(color: Colors.white)
+                            : const Text(
+                          "Register",
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
+                        ),
+>>>>>>> 871b46f34f1a7a0221a9e584e9289562bdeac8b0
                       ),
                     ),
                   ),
@@ -392,8 +461,12 @@ class _UserRegisterState extends State<UserRegister>
                         onTap: () {
                           Navigator.pushReplacement(
                             context,
+<<<<<<< HEAD
                             MaterialPageRoute(
                                 builder: (context) => const LoginPage()),
+=======
+                            MaterialPageRoute(builder: (context) => const LoginPage()),
+>>>>>>> 871b46f34f1a7a0221a9e584e9289562bdeac8b0
                           );
                         },
                         child: Text(
@@ -459,8 +532,12 @@ class _UserRegisterState extends State<UserRegister>
           border: InputBorder.none,
           filled: true,
           fillColor: fillColor,
+<<<<<<< HEAD
           contentPadding:
               const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+=======
+          contentPadding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+>>>>>>> 871b46f34f1a7a0221a9e584e9289562bdeac8b0
         ),
         validator: validator,
       ),
